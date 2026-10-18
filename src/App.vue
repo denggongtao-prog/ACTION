@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick,onBeforeUnmount, onMounted, ref, shallowRef } from 'vue';
+import {version as engineVersion} from '../package.json';
 import { PhCube, PhPlay, PhPause, PhArrowCounterClockwise, PhSkipForward, PhUploadSimple, PhArrowSquareOut, PhCrosshair, PhStack, PhCode, PhCaretRight, PhCheck, PhWarningCircle, PhEye, PhDownloadSimple } from '@phosphor-icons/vue';
 import Viewport from './components/Viewport.vue';
 import { demoJob } from './lib/demo';
@@ -145,7 +146,7 @@ async function command(message:Envelope):Promise<CommandReply>{
 }
 function report():Record<string,unknown>{
   const job=currentJob.value;
-  return {caseSource:activeCase.value?{id:activeCase.value.id,assumptions:activeCase.value.assumptions,features:activeCase.value.features}:null,engineVersion:'0.4.2',...identity.value,programId:job.program.programId,state:snapshot.value,capabilities,verification:snapshot.value?.verification??'not_checked',collisions:incidentEvents.size?[...incidentEvents.values()]:snapshot.value?.incidents??[],events:events.value.map(event=>({title:event.title,detail:event.detail,time:event.time})),inputManifest:{program:{programId:job.program.programId,sha256:job.program.sha256,lineEnding:job.program.lineEnding,physicalLines:job.program.text.split(/\r\n|\n|\r/).length},toolTableSha256:sha256(JSON.stringify(job.tools)),machineProfileSha256:sha256(JSON.stringify(job.machineProfile??null)),workOffsetsMm:job.workOffsetsMm,toolLengthOffsetsMm:job.toolLengthOffsetsMm,toolLengthReferenceMm:job.toolLengthReferenceMm,cutterRadiusOffsetsMm:job.cutterRadiusOffsetsMm,simulation:job.simulation,assets:(job.preparedMeshes??[]).map(mesh=>({objectId:mesh.objectId,role:mesh.role,sha256:mesh.sha256,triangleCount:mesh.triangles.length/9,closed:mesh.closed})),coverage:snapshot.value?.coverage},reliableRun:embed?.report(),history:embed?.history(),persistenceError:embed?.persistenceError};
+  return {caseSource:activeCase.value?{id:activeCase.value.id,assumptions:activeCase.value.assumptions,features:activeCase.value.features}:null,engineVersion,...identity.value,programId:job.program.programId,state:snapshot.value,capabilities,verification:snapshot.value?.verification??'not_checked',collisions:incidentEvents.size?[...incidentEvents.values()]:snapshot.value?.incidents??[],events:events.value.map(event=>({title:event.title,detail:event.detail,time:event.time})),inputManifest:{program:{programId:job.program.programId,sha256:job.program.sha256,lineEnding:job.program.lineEnding,physicalLines:job.program.text.split(/\r\n|\n|\r/).length},toolTableSha256:sha256(JSON.stringify(job.tools)),machineProfileSha256:sha256(JSON.stringify(job.machineProfile??null)),workOffsetsMm:job.workOffsetsMm,toolLengthOffsetsMm:job.toolLengthOffsetsMm,toolLengthReferenceMm:job.toolLengthReferenceMm,cutterRadiusOffsetsMm:job.cutterRadiusOffsetsMm,simulation:job.simulation,assets:(job.preparedMeshes??[]).map(mesh=>({objectId:mesh.objectId,role:mesh.role,sha256:mesh.sha256,triangleCount:mesh.triangles.length/9,closed:mesh.closed})),coverage:snapshot.value?.coverage},reliableRun:embed?.report(),history:embed?.history(),persistenceError:embed?.persistenceError};
 }
 function safely(action:()=>Promise<unknown>){action().catch(e=>{if((e as {code?:string}).code==='STALE_RUN')return;const line=(e as {physicalLine?:number}).physicalLine;error.value=(line?'程序第'+line+'行：':'')+(e as Error).message;});}
 function programDraft(){return {programId:currentJob.value.program.programId,text:code.value};}
@@ -267,6 +268,6 @@ onBeforeUnmount(()=>{alive=false;embed?.dispose();client?.dispose();document.rem
         <details v-if="historyRuns.length" class="run-history"><summary>历史运行与中断记录（{{ historyRuns.length }}）</summary><p v-for="run in historyRuns.slice(-4).reverse()" :key="run.identity.runId">{{ run.identity.jobId }} / r{{ run.identity.revision }} · {{ run.interrupted?'interrupted':run.state }} · {{ run.eventCount }} 个事件</p></details>
       </aside>
     </main>
-    <footer class="app-footer"><span><i/>{{ isEmbedded?'嵌入模式':'独立实验' }}<span class="separator">/</span>浏览器内计算</span><span>内核 0.4.2<span class="separator">/</span>配置范围连续检查</span></footer>
+    <footer class="app-footer"><span><i/>{{ isEmbedded?'嵌入模式':'独立实验' }}<span class="separator">/</span>浏览器内计算</span><span>内核 {{engineVersion}}<span class="separator">/</span>配置范围连续检查</span></footer>
   </div>
 </template>

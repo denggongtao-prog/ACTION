@@ -19,7 +19,7 @@ export class CncSimClient {
     this.receive=event=>this._receive(event);
     this.frameLoaded=()=>{
       if(this.disposed)return;this.epoch++;
-      this.commandQueue=Promise.resolve();
+      this.commandQueue=Promise.resolve();this.eventQueue=Promise.resolve();
       this.loaded=false;this._rejectPending(new Error('IFRAME_RELOADED：请重新查询历史或载入任务'));this._beginHandshake();
       clearInterval(this.helloTimer);this._hello();this.helloTimer=setInterval(()=>this._hello(),400);
     };
@@ -76,7 +76,7 @@ export class CncSimClient {
         if(this.disposed||epoch!==this.epoch)return;
         this._post(this._envelope('EVENT_ACK',{eventId:m.payload.eventId},{jobId:m.jobId,revision:m.revision,runId:m.runId}));
         if(fresh!==false)this._notify('onEvent',m);
-      }).catch(error=>this._error(error));return;
+      }).catch(error=>{if(!this.disposed&&epoch===this.epoch)this._error(error);});return;
     }
     const pending=this.pending.get(m.replyTo);
     if(pending){

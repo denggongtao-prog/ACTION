@@ -1,4 +1,27 @@
 import {test,expect} from '@playwright/test';
+test('第10轮审阅回归：旧查询迟到不影响新任务就绪',async({page})=>{
+  await page.addInitScript(()=>{
+    window.addEventListener('message',event=>{
+      if((window as any).delayState&&event.data?.type==='STATE'){
+        event.stopImmediatePropagation();(window as any).heldState={data:event.data,origin:event.origin,source:event.source};(window as any).delayState=false;
+      }
+      if(event.data?.type==='JOB_READY'&&(window as any).heldState){
+        const held=(window as any).heldState;(window as any).heldState=null;window.dispatchEvent(new MessageEvent('message',held));
+      }
+    },true);
+  });
+  await page.goto('/host.html');await expect(page.getByTestId('host-status')).toHaveText('已连接');await page.getByRole('button',{name:'下发示例',exact:true}).click();await expect(page.getByRole('button',{name:'开始仿真',exact:true})).toBeEnabled();
+  await page.evaluate(()=>(window as any).delayState=true);await page.getByRole('button',{name:'查询状态',exact:true}).click();await expect.poll(()=>page.evaluate(()=>!!(window as any).heldState)).toBe(true);
+  await page.getByRole('button',{name:'下发示例',exact:true}).click();await expect(page.frameLocator('iframe').getByTestId('state')).toHaveText('就绪');await expect(page.getByRole('button',{name:'开始仿真',exact:true})).toBeEnabled();
+});
+test('第10轮：0.5.0握手报告页脚一致，连续SDK操作使用最新身份',async({page})=>{
+  await page.goto('/examples/host-integration/index.html');await page.getByRole('button',{name:'连接',exact:true}).click();await expect(page.locator('#connection')).toHaveText('已连接');
+  expect(await page.evaluate(()=>(window as any).exampleClient.ready.engineVersion)).toBe('0.5.0');
+  await page.getByRole('button',{name:'下发任务',exact:true}).click();await expect(page.locator('#messages')).toContainText('JOB_READY');
+  const result=await page.evaluate(async()=>{const c=(window as any).exampleClient;await Promise.all([c.reset(),c.setSpeed(2),c.seekLine(1)]);return {identity:c.identity,report:(await c.getReport()).payload};});
+  expect(result.report.engineVersion).toBe('0.5.0');expect(result.report.runId).toBe(result.identity.runId);expect(result.report.state.speed).toBe(2);
+  await expect(page.frameLocator('iframe').locator('.app-footer')).toContainText('0.5.0');await expect(page.getByRole('alert')).toBeEmpty();
+});
 test('第08轮：O0008完整动画后导出全部4条碰撞CSV',async({page})=>{
   await page.goto('/');await expect(page.getByTestId('state')).toHaveText('就绪');await page.getByLabel('原始案例').selectOption('O0008');await page.getByRole('button',{name:'载入案例',exact:true}).click();
   await expect(page.getByTestId('state')).toHaveText('就绪');await page.getByLabel('回放倍率').selectOption('20');await page.getByRole('button',{name:'开始',exact:true}).click();await expect(page.getByTestId('state')).toHaveText('已完成',{timeout:20000});

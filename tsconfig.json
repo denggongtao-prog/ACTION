@@ -26,6 +26,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "e2e/**/*.ts",
-    "*.ts"
+    "*.ts",
+    "examples/**/*.ts"
   ]
 }

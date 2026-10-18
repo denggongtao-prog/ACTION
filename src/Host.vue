@@ -12,7 +12,8 @@ const messages=ref<{type:string;payload:string;time:string}[]>([]);
 const scenarioId=ref('normal'),programText=ref(''),taskJson=ref(taskToJson(demoJob())),collision=ref<CollisionEvent|null>(null),storageError=ref('');
 const libraryId=ref('O0001');
 const busy=ref(false),hostState=ref('IDLE'),speed=ref('1'),seekLine=ref(1);
-const pending=new Map<string,string>();
+const pending=new Map<string,{type:string;identity:Identity}>();
+const sameIdentity=(a:Identity,b:Identity)=>a.jobId===b.jobId&&a.revision===b.revision&&a.runId===b.runId;
 const pendingTimers=new Map<string,ReturnType<typeof setTimeout>>();
 function clearPending(){for(const timer of pendingTimers.values())clearTimeout(timer);pendingTimers.clear();pending.clear();busy.value=false;}
 const channelId=crypto.randomUUID();
@@ -28,7 +29,7 @@ function send(type:string,payload:Record<string,unknown>={}){
   if(control&&busy.value){storageError.value='上一条控制命令尚未完成';return;}
   if(control){busy.value=true;storageError.value='';}
   const message:Envelope={protocol:'cnc-sim',version:'1.0',type,messageId:crypto.randomUUID(),channelId,...identity,payload};
-  pending.set(message.messageId,type);if(pending.size>128)pending.delete(pending.keys().next().value!);
+  pending.set(message.messageId,{type,identity:{...identity}});if(pending.size>128){const first=pending.keys().next().value!;clearTimeout(pendingTimers.get(first));pendingTimers.delete(first);pending.delete(first);}
   if(type!=='HELLO')pendingTimers.set(message.messageId,setTimeout(()=>{pending.delete(message.messageId);pendingTimers.delete(message.messageId);if(control)busy.value=false;storageError.value=type+'应答超时，命令可能已执行，请查询状态';},type==='LOAD_JOB'?60000:15000));
   frame.value?.contentWindow?.postMessage(message,window.location.origin);
 }
@@ -55,13 +56,13 @@ function receive(event:MessageEvent){
   if(event.origin!==window.location.origin||event.source!==frame.value?.contentWindow)return;
   const m=event.data as Envelope;if(m?.protocol!=='cnc-sim'||m.version!=='1.0'||m.channelId!==channelId||typeof m.type!=='string'||typeof m.messageId!=='string'||!m.payload||typeof m.payload!=='object'||Array.isArray(m.payload))return;
   if(m.type==='SIM_READY'){connected.value=true;storageError.value='';clearInterval(timer);clearTimeout(handshakeTimeout);}
-  const command=m.replyTo?pending.get(m.replyTo):undefined;
-  if(m.replyTo){pending.delete(m.replyTo);clearTimeout(pendingTimers.get(m.replyTo));pendingTimers.delete(m.replyTo);if(command&&!['HELLO','GET_STATE','GET_REPORT','PING'].includes(command))busy.value=false;}
-  if(command==='LOAD_JOB'&&m.type==='JOB_READY'&&m.revision===identity.revision&&m.runId===identity.runId&&m.jobId===identity.jobId)loaded.value=true;
-  if(command&&(m.type==='JOB_READY'||m.type==='STATE'||(m.type==='COMMAND_ERROR'&&(command==='LOAD_JOB'||m.payload.code==='STALE_RUN')))&&m.runId&&m.jobId&&m.revision)identity={jobId:m.jobId,revision:m.revision,runId:m.runId};
-  if(m.type==='STATE'&&['RESET','SEEK_LINE'].includes(command??''))collision.value=null;
-  if(m.type==='COMMAND_ERROR'&&command==='LOAD_JOB')loaded.value=false;
-  if(m.type==='COMMAND_ERROR')storageError.value=String(m.payload.message??'命令失败');
+  const request=m.replyTo?pending.get(m.replyTo):undefined,command=request?.type,currentRequest=!!request&&sameIdentity(request.identity,identity);
+  if(m.replyTo){pending.delete(m.replyTo);clearTimeout(pendingTimers.get(m.replyTo));pendingTimers.delete(m.replyTo);if(currentRequest&&command&&!['HELLO','GET_STATE','GET_REPORT','PING'].includes(command))busy.value=false;}
+  if(currentRequest&&command==='LOAD_JOB'&&m.type==='JOB_READY'&&m.revision===identity.revision&&m.runId===identity.runId&&m.jobId===identity.jobId)loaded.value=true;
+  if(currentRequest&&(m.type==='JOB_READY'||m.type==='STATE'||(m.type==='COMMAND_ERROR'&&(command==='LOAD_JOB'||m.payload.code==='STALE_RUN')))&&m.runId&&m.jobId&&m.revision)identity={jobId:m.jobId,revision:m.revision,runId:m.runId};
+  if(currentRequest&&m.type==='STATE'&&['RESET','SEEK_LINE'].includes(command??''))collision.value=null;
+  if(currentRequest&&m.type==='COMMAND_ERROR'&&command==='LOAD_JOB')loaded.value=false;
+  if(currentRequest&&m.type==='COMMAND_ERROR')storageError.value=String(m.payload.message??'命令失败');
   const state=m.type==='PROGRESS'||m.type==='COMPLETED'?m.payload:m.payload.state;
   if(m.jobId===identity.jobId&&m.revision===identity.revision&&m.runId===identity.runId&&state&&typeof state==='object'&&'state'in state&&typeof state.state==='string')hostState.value=state.state;
   if(criticalEventTypes.has(m.type)&&typeof m.payload?.eventId==='string'&&!acknowledge(m))return;

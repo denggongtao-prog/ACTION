@@ -79,3 +79,17 @@ describe('第05轮：事件降级和回调隔离',()=>{
     client.onMessage=vi.fn();receive('PROGRESS',[]);receive('PROGRESS',{}, {messageId:''});receive('PROGRESS',{}, {version:'2.0'});expect(client.onMessage).not.toHaveBeenCalled();
   });
 });
+describe('第10轮：异步保存的跨页面恢复',()=>{
+  it('旧页面保存挂起时，新页面事件使用新队列，不被旧Promise阻塞',async()=>{
+    let finish!:(fresh:boolean)=>void;client.onEvent=vi.fn();client.persistEvent=()=>new Promise(resolve=>{finish=resolve;});
+    receive('COMPLETED',{eventId:'old-event',eventSeq:1});await flush();const oldQueue=client.eventQueue;
+    frame.dispatchEvent(new Event('load'));receive('SIM_READY',{});client.persistEvent=()=>true;
+    receive('COMPLETED',{eventId:'new-event',eventSeq:1},{runId:'new-run'});await flush();expect(client.onEvent).toHaveBeenCalledOnce();
+    expect(client.onEvent.mock.calls[0][0].payload.eventId).toBe('new-event');finish(true);await oldQueue;expect(client.onEvent).toHaveBeenCalledOnce();
+  });
+  it('释放后保存失败不再触发旧页面错误回调',async()=>{
+    let reject!:(error:Error)=>void;client.onError=vi.fn();client.persistEvent=()=>new Promise((_resolve,no)=>{reject=no;});
+    receive('COMPLETED',{eventId:'old-event',eventSeq:1});await flush();const queue=client.eventQueue;client.dispose();reject(new Error('旧保存失败'));await queue;
+    expect(client.onError).not.toHaveBeenCalled();
+  });
+});

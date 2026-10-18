@@ -1,3 +1,5 @@
+import {readFileSync} from 'node:fs';
+const {version:engineVersion}=JSON.parse(readFileSync(new URL('../package.json',import.meta.url),'utf8'));
 import {test,expect,type Page} from '@playwright/test';
 
 async function connect(page:Page){
@@ -9,7 +11,7 @@ const report=(page:Page)=>page.evaluate(async()=> (await (window as any).example
 
 test('手册双刀任务完整执行、保存并确认事件，重置和回看采纳新runId',async({page})=>{
   const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await connect(page);
-  expect(await page.evaluate(()=>(window as any).exampleClient.ready.engineVersion)).toBe('0.4.2');
+  expect(await page.evaluate(()=>(window as any).exampleClient.ready.engineVersion)).toBe(engineVersion);
   await page.getByRole('button',{name:'下发任务',exact:true}).click();
   await expect(page.locator('#messages')).toContainText('JOB_READY');
   await page.getByRole('button',{name:'应用倍率',exact:true}).click();

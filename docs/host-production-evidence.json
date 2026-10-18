@@ -1,6 +1,6 @@
 {
   "mount": "/cnc/",
-  "engineVersion": "0.4.2",
+  "engineVersion": "0.5.0",
   "state": "COMPLETED",
   "verification": "fully_checked",
   "removedVolumeMm3": 1187.8125121286607,
