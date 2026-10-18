@@ -36,3 +36,15 @@ describe('第01轮：SDK输入边界',()=>{
     client.connected=false;await expect(client.loadJob({})).rejects.toThrow();expect(client.identity).toEqual(identity);
   });
 });
+describe('第03轮：握手与重连',()=>{
+  it('首次和重复connect均返回SIM_READY信封',async()=>{
+    client.connected=false;const first=client.connect();frame.dispatchEvent(new Event('load'));receive('SIM_READY',{engineVersion:'test'});
+    expect(await client.connect()).toEqual(await first);expect((await first).type).toBe('SIM_READY');
+  });
+  it('iframe重载重新握手超时会结束重试并通知断连',async()=>{
+    client.onError=vi.fn();client.onConnectionChange=vi.fn();frame.dispatchEvent(new Event('load'));
+    expect(client.onConnectionChange).toHaveBeenCalledWith('connecting');await vi.advanceTimersByTimeAsync(15001);
+    expect(client.onConnectionChange).toHaveBeenLastCalledWith('disconnected');expect(client.onError).toHaveBeenCalledOnce();
+    const count=sent.length;await vi.advanceTimersByTimeAsync(2000);expect(sent).toHaveLength(count);
+  });
+});

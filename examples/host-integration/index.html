@@ -19,7 +19,7 @@ $('job').value=JSON.stringify(await(await fetch('./sample-job.json')).json(),nul
 function show(message){$('messages').textContent=(message.type+' '+JSON.stringify(message.payload)+'\n'+$('messages').textContent).slice(0,12000);$('identity').textContent=JSON.stringify(client?.identity??null);}
 function fail(error){$('error').textContent=error.message;}
 function action(id,work){$(id).onclick=async()=>{try{$('error').textContent='';await work();$('identity').textContent=JSON.stringify(client?.identity??null);}catch(error){fail(error);}};}
-action('connect',async()=>{client?.dispose();client=new CncSimClient(frame,$('url').value,{onMessage:show,onEvent:show,onError:fail});window.exampleClient=client;await client.connect();$('connection').textContent='已连接';});
+action('connect',async()=>{client?.dispose();client=new CncSimClient(frame,$('url').value,{onMessage:show,onEvent:show,onError:fail,onConnectionChange:state=>{$('connection').textContent=({connecting:'正在连接',connected:'已连接',disconnected:'已断开',disposed:'已释放'})[state];}});window.exampleClient=client;await client.connect();});
 action('load',async()=>{
   const job=JSON.parse($('job').value),file=$('model').files[0];
   if(file){const format=file.name.split('.').pop().toLowerCase();if(!['glb','stl'].includes(format))throw new Error('请选择GLB或STL');
