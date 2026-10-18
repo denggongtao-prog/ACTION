@@ -1,5 +1,8 @@
 /** Reference host adapter for protocol 1.0. No framework or third-party dependencies. */
 export const CRITICAL_EVENTS=new Set(['COLLISION','LIMIT','INDETERMINATE','ERROR','TOOL_CHANGE','COMPLETED']);
+const COMMANDS=new Set(['LOAD_JOB','START','PAUSE','RESUME','STEP','RESET','SEEK_LINE','SET_SPEED','GET_STATE','GET_REPORT','EVENT_ACK','PING']);
+const validId=value=>typeof value==='string'&&!!value.trim()&&value.length<=128;
+const validIdentity=value=>value&&validId(value.jobId)&&Number.isSafeInteger(value.revision)&&value.revision>0&&validId(value.runId);
 export class CncSimClient {
   constructor(frame,url,{onMessage=()=>{},onEvent=()=>{},onError=console.error,persistEvent}={}){
     this.frame=frame;this.url=new URL(url,location.href);this.origin=this.url.origin;
@@ -66,9 +69,20 @@ export class CncSimClient {
     }
     this.onMessage(m);
   }
-  request(type,payload={}, {identity=this.context,timeoutMs=15000,retries=1}={}){
+  _validateRequest(type,payload,identity,timeoutMs,retries){
+    const invalid=message=>{throw Object.assign(new Error(message),{code:'INVALID_INPUT'});};
+    if(!COMMANDS.has(type))invalid('不支持的命令：'+type);
+    if(!payload||typeof payload!=='object'||Array.isArray(payload))invalid('payload必须是对象');
+    if(type!=='PING'&&!validIdentity(identity))invalid('任务身份不完整或无效');
+    if(!Number.isFinite(timeoutMs)||timeoutMs<1||timeoutMs>120000)invalid('timeoutMs应为1至120000');
+    if(!Number.isInteger(retries)||retries<0||retries>3)invalid('retries应为0至3整数');
+    if(type==='SET_SPEED'&&(!Number.isFinite(payload.speed)||payload.speed<.25||payload.speed>20))invalid('倍率应为0.25至20');
+    if(type==='SEEK_LINE'&&(!Number.isSafeInteger(payload.physicalLine)||payload.physicalLine<1))invalid('物理行号应为正整数');
+    if(type==='EVENT_ACK'&&!validId(payload.eventId))invalid('eventId无效');
+  }
+  async request(type,payload={}, {identity=this.context,timeoutMs=15000,retries=1}={}){
     if(!this.connected)return Promise.reject(new Error('请先完成HELLO握手'));
-    if(type!=='PING'&&!identity)return Promise.reject(new Error('此命令需要jobId/revision/runId'));
+    this._validateRequest(type,payload,identity,timeoutMs,retries);
     // Keep an immutable copy and no transfer list, so a retry can reuse exactly the same bytes/messageId.
     const message=structuredClone(this._envelope(type,payload,identity));
     return new Promise((resolve,reject)=>{
@@ -84,7 +98,9 @@ export class CncSimClient {
     });
   }
   async loadJob(job,{jobId='manual-example',revision,runId=crypto.randomUUID()}={}){
+    if(!this.connected)throw new Error('请先完成HELLO握手');
     const nextRevision=revision??Math.max(this.revisions.get(jobId)??0,this.context?.jobId===jobId?this.context.revision:0)+1;
+    this._validateRequest('LOAD_JOB',job,{jobId,revision:nextRevision,runId},60000,1);structuredClone(job);
     this.context={jobId,revision:nextRevision,runId};this.revisions.set(jobId,nextRevision);this.loaded=false;
     return this.request('LOAD_JOB',job,{timeoutMs:60000});
   }
