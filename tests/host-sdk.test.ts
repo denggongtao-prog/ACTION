@@ -10,6 +10,16 @@ beforeEach(()=>{
   frame=new EventTarget();frame.contentWindow={postMessage:(message:any)=>sent.push(message)};frame.src='';
   client=new CncSimClient(frame,'https://sim.example.edu/index.html');client.connected=true;client.context={...identity};
 });
+describe('第02轮：释放与异步隔离',()=>{
+  it('保存尚未完成时释放，不再确认或向业务派发事件',async()=>{
+    let finish!:(fresh:boolean)=>void;client.persistEvent=()=>new Promise(resolve=>{finish=resolve;});client.onEvent=vi.fn();
+    receive('COMPLETED',{eventId:'event-1',eventSeq:1});await Promise.resolve();client.dispose();finish(true);await client.eventQueue;
+    expect(sent).toHaveLength(0);expect(client.onEvent).not.toHaveBeenCalled();
+  });
+  it('释放幂等，拒绝重连和后续请求',async()=>{
+    client.dispose();client.dispose();await expect(client.connect()).rejects.toThrow('释放');await expect(client.getState()).rejects.toThrow('释放');expect(frame.src).toBe('');
+  });
+});
 afterEach(()=>{client.dispose();vi.clearAllTimers();vi.useRealTimers();vi.unstubAllGlobals();});
 function receive(type:string,payload:any={},extra:any={}){
   client._receive({origin:'https://sim.example.edu',source:frame.contentWindow,data:{protocol:'cnc-sim',version:'1.0',type,messageId:crypto.randomUUID(),channelId:client.channelId,...identity,payload,...extra}});

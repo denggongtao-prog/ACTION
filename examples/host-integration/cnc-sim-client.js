@@ -6,7 +6,7 @@ const validIdentity=value=>value&&validId(value.jobId)&&Number.isSafeInteger(val
 export class CncSimClient {
   constructor(frame,url,{onMessage=()=>{},onEvent=()=>{},onError=console.error,persistEvent}={}){
     this.frame=frame;this.url=new URL(url,location.href);this.origin=this.url.origin;
-    this.channelId=crypto.randomUUID();this.context=null;this.connected=false;this.loaded=false;
+    this.channelId=crypto.randomUUID();this.context=null;this.connected=false;this.loaded=false;this.disposed=false;this.epoch=0;
     this.pending=new Map();this.revisions=new Map();this.eventQueue=Promise.resolve();
     this.onMessage=onMessage;this.onEvent=onEvent;this.onError=onError;
     this.persistEvent=persistEvent??(message=>{
@@ -17,6 +17,7 @@ export class CncSimClient {
     });
     this.receive=event=>this._receive(event);
     this.frameLoaded=()=>{
+      if(this.disposed)return;this.epoch++;
       this.connected=false;this.loaded=false;this._rejectPending(new Error('IFRAME_RELOADED：请重新查询历史或载入任务'));
       clearInterval(this.helloTimer);this._hello();this.helloTimer=setInterval(()=>this._hello(),400);
     };
@@ -24,6 +25,7 @@ export class CncSimClient {
   }
   get identity(){return this.context?structuredClone(this.context):null;}
   connect(){
+    if(this.disposed)return Promise.reject(new Error('连接已释放'));
     if(this.connected)return Promise.resolve(this.ready);
     if(this.handshake)return this.handshake.promise;
     let resolve,reject;const promise=new Promise((yes,no)=>{resolve=yes;reject=no;});
@@ -42,6 +44,7 @@ export class CncSimClient {
     }
   }
   _receive(event){
+    if(this.disposed)return;
     if(event.origin!==this.origin||event.source!==this.frame.contentWindow)return;
     const m=event.data;if(!m||m.protocol!=='cnc-sim'||m.version!=='1.0'||m.channelId!==this.channelId||!m.payload)return;
     if(m.type==='SIM_READY'){
@@ -50,8 +53,11 @@ export class CncSimClient {
     }
     // ACK only critical EVENT TYPES. COMMAND_ACK also contains eventId and must never be ACKed again.
     if(CRITICAL_EVENTS.has(m.type)&&typeof m.payload.eventId==='string'){
+      const epoch=this.epoch;
       this.eventQueue=this.eventQueue.then(async()=>{
+        if(this.disposed||epoch!==this.epoch)return;
         const fresh=await this.persistEvent(structuredClone(m)); // Failure => no ACK; server retains/retries.
+        if(this.disposed||epoch!==this.epoch)return;
         this._post(this._envelope('EVENT_ACK',{eventId:m.payload.eventId},{jobId:m.jobId,revision:m.revision,runId:m.runId}));
         if(fresh!==false)this.onEvent(m);
       }).catch(error=>this.onError(error));return;
@@ -81,6 +87,7 @@ export class CncSimClient {
     if(type==='EVENT_ACK'&&!validId(payload.eventId))invalid('eventId无效');
   }
   async request(type,payload={}, {identity=this.context,timeoutMs=15000,retries=1}={}){
+    if(this.disposed)throw new Error('连接已释放');
     if(!this.connected)return Promise.reject(new Error('请先完成HELLO握手'));
     this._validateRequest(type,payload,identity,timeoutMs,retries);
     // Keep an immutable copy and no transfer list, so a retry can reuse exactly the same bytes/messageId.
@@ -123,6 +130,7 @@ export class CncSimClient {
   getReport(identity){return this._read('GET_REPORT',identity??this.context,identity===undefined);}
   _rejectPending(error){for(const p of this.pending.values()){clearTimeout(p.timer);p.reject(error);}this.pending.clear();}
   dispose(){
+    if(this.disposed)return;this.disposed=true;this.epoch++;
     window.removeEventListener('message',this.receive);this.frame.removeEventListener('load',this.frameLoaded);clearInterval(this.helloTimer);
     if(this.handshake){clearTimeout(this.handshake.timer);this.handshake.reject(new Error('连接已释放'));this.handshake=null;}
     this._rejectPending(new Error('连接已释放'));this.connected=false;
