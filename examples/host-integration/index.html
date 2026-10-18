@@ -15,7 +15,7 @@
 import {CncSimClient} from './cnc-sim-client.js';
 const $=id=>document.getElementById(id),frame=$('simulation');let client;
 $('url').value=new URL('../../index.html?instanceId=host-manual-example',location.href).href;
-$('job').value=JSON.stringify(await(await fetch('./sample-job.json')).json(),null,2);
+$('job').value=JSON.stringify(await(await fetch(new URL('./sample-job.json?no-inline',import.meta.url))).json(),null,2);
 function show(message){$('messages').textContent=(message.type+' '+JSON.stringify(message.payload)+'\n'+$('messages').textContent).slice(0,12000);$('identity').textContent=JSON.stringify(client?.identity??null);}
 function fail(error){$('error').textContent=error.message;}
 function action(id,work){$(id).onclick=async()=>{try{$('error').textContent='';await work();$('identity').textContent=JSON.stringify(client?.identity??null);}catch(error){fail(error);}};}

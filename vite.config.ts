@@ -6,6 +6,6 @@ export default defineConfig({
   base: './',
   server:{watch:{usePolling:true,interval:200}},
   test: { include: ['tests/**/*.test.ts'] },
-  build: { rollupOptions: { input: { simulator: resolve(import.meta.dirname, 'index.html'), host: resolve(import.meta.dirname, 'host.html') } } },
+  build: { rollupOptions: { input: { simulator: resolve(import.meta.dirname, 'index.html'), host: resolve(import.meta.dirname, 'host.html'), integration:resolve(import.meta.dirname,'examples/host-integration/index.html') } } },
 });
 

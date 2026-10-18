@@ -1,0 +1,22 @@
+{
+  "mount": "/cnc/",
+  "engineVersion": "0.4.2",
+  "state": "COMPLETED",
+  "verification": "fully_checked",
+  "removedVolumeMm3": 1187.8125121286607,
+  "events": [
+    {
+      "type": "TOOL_CHANGE",
+      "acknowledged": true
+    },
+    {
+      "type": "TOOL_CHANGE",
+      "acknowledged": true
+    },
+    {
+      "type": "COMPLETED",
+      "acknowledged": true
+    }
+  ],
+  "pageErrors": []
+}
