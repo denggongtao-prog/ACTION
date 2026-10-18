@@ -1,0 +1,14 @@
+{
+  "measuredAt": "2026-10-18T12:11:18.633Z",
+  "browserVersion": "155.0.4283.60",
+  "url": "http://127.0.0.1:8787/",
+  "artifact": "dist production build via Vite preview",
+  "checks": [
+    "normal two-tool machining completed with coverage",
+    "bundled module Worker loaded",
+    "iframe handshake and model transfer",
+    "fixture collision source line and position returned",
+    "report retained acknowledged event"
+  ],
+  "errors": []
+}

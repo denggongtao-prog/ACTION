@@ -1,0 +1,259 @@
+{
+  "measuredAt": "2026-10-18T12:47:56.451Z",
+  "url": "http://127.0.0.1:8787/",
+  "browserVersion": "155.0.4283.60",
+  "method": "Real Edge pages, bundled original programs/models/PDF, source-line steps through every case, real Worker and downloaded reports",
+  "rows": [
+    {
+      "id": "O0001",
+      "state": "已完成",
+      "verification": "fully_checked",
+      "source": null,
+      "collisionType": null,
+      "removedVolumeMm3": 67861.6052152929,
+      "programSha256": "12e9c01c5a1f1121af6e47b75c9714496a2c3e29ad8a0e3fca16d372e378b7ed",
+      "documentCount": 4,
+      "pdfStatus": 200,
+      "caseSource": {
+        "id": "O0001",
+        "assumptions": [
+          "成品600×370×30，初始矩形坯按此外框；未提供额外毛坯余量和夹具。",
+          "T2 φ16/T1 φ10由CAM名称，T7 φ12沿+Y侧钻；刃长40、量规60及刀柄为教学假设，H均60。",
+          "M6使用教学换刀站[-30,-100,200]轴坐标，换刀后留在站点。真实站点未知；若直接在工件上方原位逻辑换侧头，Z32不足以保证横刀安全。",
+          "底面Z0；STL按轴置换和平移与程序对齐。大件实际格距1.5mm。"
+        ],
+        "features": [
+          "T/M6",
+          "G43",
+          "Y+侧钻G81/G99"
+        ]
+      }
+    },
+    {
+      "id": "O0008",
+      "state": "碰撞暂停",
+      "verification": "collision_detected",
+      "source": {
+        "physicalLine": 95,
+        "blockNumber": 910,
+        "sourceText": "N910G43Z14.H3M9",
+        "programId": "O0008",
+        "programSha256": "1b288d609ccdbf8b58df6d56c977c95a111066ae2b801d908bdfeefe7a52bca2",
+        "instructionId": 95,
+        "segmentIndex": 107
+      },
+      "collisionType": "RAPID_STOCK",
+      "removedVolumeMm3": 182008,
+      "programSha256": "1b288d609ccdbf8b58df6d56c977c95a111066ae2b801d908bdfeefe7a52bca2",
+      "documentCount": 8,
+      "pdfStatus": 200,
+      "caseSource": {
+        "id": "O0008",
+        "assumptions": [
+          "以用户选择的CAM原程序和图纸为主：T1 φ6，T2 φ5；毛坯320×350×22，XY左下原点为教学假设。",
+          "H采用截图0/35/-25，参考量规100，安装长100/135/75；有效刃长35/30/15为假设。",
+          "T3为R10成形刀；缺少完整剖面，采用可编辑的R10、导向半径10、最大半径20教学剖面（32段），D3=10为注册偏置。不能据此认证原刀具/成品吻合。",
+          "初始位置及第一参考点为教学配置，未复原截图机床/平口钳。STL平移XY各151.345169。"
+        ],
+        "features": [
+          "G41/D",
+          "R圆弧",
+          "R10成形刀",
+          "G81",
+          "G28"
+        ]
+      }
+    },
+    {
+      "id": "O0020",
+      "state": "碰撞暂停",
+      "verification": "collision_detected",
+      "source": {
+        "physicalLine": 20,
+        "blockNumber": 180,
+        "sourceText": "N180G40G00X300Y220",
+        "programId": "O0020",
+        "programSha256": "d101a849c5074245e23c995336fd416fa08ef76b9146dd77d73fe012f7835eb9",
+        "instructionId": 23,
+        "segmentIndex": 0
+      },
+      "collisionType": "RAPID_STOCK",
+      "removedVolumeMm3": 34410.95814977965,
+      "programSha256": "d101a849c5074245e23c995336fd416fa08ef76b9146dd77d73fe012f7835eb9",
+      "documentCount": 4,
+      "pdfStatus": 200,
+      "caseSource": {
+        "id": "O0020",
+        "assumptions": [
+          "φ16直刀、D1=8；有效刃长30、量规60及H1=60为教学假设。",
+          "毛坯按成品300×170×20包围盒；txt的G92使物理Y偏移-85，毛坯与参考STL同步放置。",
+          "刀路图对刀点Y320与txt Y220不一致，本例保留原txt。初始刀尖[300,135,60]是假设。"
+        ],
+        "features": [
+          "G92",
+          "G42/D",
+          "G43/G49"
+        ]
+      }
+    },
+    {
+      "id": "O0021",
+      "state": "碰撞暂停",
+      "verification": "collision_detected",
+      "source": {
+        "physicalLine": 6,
+        "blockNumber": 50,
+        "sourceText": "N050G42G16X60Y330D01F100",
+        "programId": "O0021",
+        "programSha256": "6ab13ba7dc9553aa90c35777858dad8e116e2a74586a01976564016b584729f1",
+        "instructionId": 4,
+        "segmentIndex": 38
+      },
+      "collisionType": "RAPID_STOCK",
+      "removedVolumeMm3": 0,
+      "programSha256": "6ab13ba7dc9553aa90c35777858dad8e116e2a74586a01976564016b584729f1",
+      "documentCount": 6,
+      "pdfStatus": 200,
+      "caseSource": {
+        "id": "O0021",
+        "assumptions": [
+          "φ16直刀、D1=8；刃长40/量规60及初始刀尖为假设。",
+          "原G42 G16块继承G0，本例保持快移并启用检查，可能在入料时停机；适配不等于原程序无碰撞。"
+        ],
+        "features": [
+          "G15/G16",
+          "G42/D"
+        ]
+      }
+    },
+    {
+      "id": "O0022",
+      "state": "已完成",
+      "verification": "fully_checked",
+      "source": null,
+      "collisionType": null,
+      "removedVolumeMm3": 18816.03219855777,
+      "programSha256": "23479b5b50b50805c807b628117acb0109e0cbe58e201984b4bb9748fed285eb",
+      "documentCount": 5,
+      "pdfStatus": 200,
+      "caseSource": {
+        "id": "O0022",
+        "assumptions": [
+          "按CAM教学要求用φ10钻，PDF却标φ20；原文件保留并提示冲突。",
+          "矩形坯200×100×30、顶面Z0。有效刃长45、量规70、初始位置为教学假设。",
+          "复位默认G98回初始面；G0取消循环。原程序8孔、R2、Z-35、F20、S200均保留。"
+        ],
+        "features": [
+          "G81",
+          "G90/G91",
+          "G98/G99"
+        ]
+      }
+    },
+    {
+      "id": "O0023",
+      "state": "已完成",
+      "verification": "fully_checked",
+      "source": null,
+      "collisionType": null,
+      "removedVolumeMm3": 9711.71838167627,
+      "programSha256": "0352750f5bc38c4973880f88e43129a7f775070d64436ad63e62b52455b60e3a",
+      "documentCount": 5,
+      "pdfStatus": 200,
+      "caseSource": {
+        "id": "O0023",
+        "assumptions": [
+          "T1 φ20钻；T2刀径缺失，教学设φ10、D2=5、H2=60；刃长30/量规60为假设。",
+          "初始粗坯用[-5,-5,-5]至[85,50,0]矩形外框；原要求沿形状留5，矩形会保留未切外围材料，不能当作原粗坯精确复原。",
+          "第一/第二参考轴点均设[-50,-50,200]，未提供真实机床位置。成品原点与刀路图外扩5原点冲突，按原txt/图纸成品坐标。"
+        ],
+        "features": [
+          "G30",
+          "T预选/M6",
+          "G41",
+          "G28"
+        ]
+      }
+    },
+    {
+      "id": "O0025",
+      "state": "已完成",
+      "verification": "fully_checked",
+      "source": null,
+      "collisionType": null,
+      "removedVolumeMm3": 723,
+      "programSha256": "56a5cb5d048d23c153becc02b3cd611959f451f01a54b42aa94e724451d36c71",
+      "documentCount": 5,
+      "pdfStatus": 200,
+      "caseSource": {
+        "id": "O0025",
+        "assumptions": [
+          "程序原文和刀路图R12优先；PDF标R12.5，资料冲突保留。",
+          "外框60×45；厚10、φ4平底刀、有效刃长15/量规50为教学假设。",
+          "初始刀尖[50,42,50]以G92声明点建立，G92本身不移动。"
+        ],
+        "features": [
+          "G92",
+          "I/J大弧"
+        ]
+      }
+    },
+    {
+      "id": "O0314",
+      "state": "已完成",
+      "verification": "fully_checked",
+      "source": null,
+      "collisionType": null,
+      "removedVolumeMm3": 1086.5375188745777,
+      "programSha256": "588ffd71af1b44a4f79fb9784fc1e76451b627de34d222a55eab4f05eaec495d",
+      "documentCount": 4,
+      "pdfStatus": 200,
+      "caseSource": {
+        "id": "O0314",
+        "assumptions": [
+          "毛坯[55,10,-25]至[115,55,0]，原点在毛坯外，不能居中。",
+          "φ6钻；初始刀尖[0,0,25]、有效刃长40/量规60、H1=60为教学假设。",
+          "保留G91增量和G04 X5秒：两孔钻尖分别到Z-15与Z-30。"
+        ],
+        "features": [
+          "G91",
+          "G43/G49",
+          "G4 X"
+        ]
+      }
+    },
+    {
+      "id": "O0315",
+      "state": "碰撞暂停",
+      "verification": "collision_detected",
+      "source": {
+        "physicalLine": 15,
+        "blockNumber": 130,
+        "sourceText": "N130G40G00X-60.0Y60.0M09",
+        "programId": "O0315",
+        "programSha256": "e8cbefbcde3af8423047e55980777a9f94eeb8f534afc7d9a66c2e6a740f3ce3",
+        "instructionId": 16,
+        "segmentIndex": 0
+      },
+      "collisionType": "RAPID_STOCK",
+      "removedVolumeMm3": 44415,
+      "programSha256": "e8cbefbcde3af8423047e55980777a9f94eeb8f534afc7d9a66c2e6a740f3ce3",
+      "documentCount": 5,
+      "pdfStatus": 200,
+      "caseSource": {
+        "id": "O0315",
+        "assumptions": [
+          "φ8立铣刀；采用物理一致D1=4。原要求同时写φ8及D01=8，后者按半径口径与刀径冲突，可在完整JSON改为8比较。",
+          "矩形粗坯130×70×20、刃长30/量规60/H1=60、初始位置为教学假设；原资料只给成品120×60×20。",
+          "所有G0进入余料仍检查，不将原程序强制判为安全。"
+        ],
+        "features": [
+          "G41/D",
+          "G43/G49"
+        ]
+      }
+    }
+  ],
+  "narrowHorizontalOverflow": false,
+  "errors": []
+}

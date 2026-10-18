@@ -1,0 +1,213 @@
+{
+  "measuredAt": "2026-10-18T12:12:37.537Z",
+  "runtime": "v24.14.1",
+  "scope": "Independent analytic slot volume and real thin-fixture asset, at three playback speeds and source-line step. Not a CAMotics comparison.",
+  "convergence": [
+    {
+      "cellMm": 0.5,
+      "analyticVolumeMm3": 105.13274122871834,
+      "volumeMm3": 106,
+      "absoluteErrorMm3": 0.8672587712816551,
+      "relativeError": 0.008249178715838072,
+      "independentBoundaryBoundMm3": 23.813299663445132
+    },
+    {
+      "cellMm": 0.25,
+      "analyticVolumeMm3": 105.13274122871834,
+      "volumeMm3": 106,
+      "absoluteErrorMm3": 0.8672587712816551,
+      "relativeError": 0.008249178715838072,
+      "independentBoundaryBoundMm3": 11.710300290873203
+    },
+    {
+      "cellMm": 0.1,
+      "analyticVolumeMm3": 105.13274122871834,
+      "volumeMm3": 105.27999999999619,
+      "absoluteErrorMm3": 0.1472587712778477,
+      "relativeError": 0.0014006937282980507,
+      "independentBoundaryBoundMm3": 4.636996226545435
+    }
+  ],
+  "thinFixture": [
+    {
+      "speed": 0.25,
+      "state": "PAUSED_COLLISION",
+      "source": {
+        "physicalLine": 4,
+        "blockNumber": 350,
+        "sourceText": "N350 G1 X10 F300",
+        "programId": "SCENARIO-FIXTURE",
+        "programSha256": "0e1f3f6351281e8bf0599efd09f2b0a643a5d2f30ddc312c632f1c8dde12935d",
+        "instructionId": 1,
+        "segmentIndex": 35
+      },
+      "contact": {
+        "frame": "machine",
+        "workFrame": "G54",
+        "unit": "mm",
+        "point": [
+          -0.1,
+          -0.000014957311884389313,
+          5.999990028458744
+        ],
+        "pointInWork": [
+          -0.1,
+          -0.000014957311884389313,
+          5.999990028458744
+        ],
+        "toolPoint": [
+          -0.09999999999999964,
+          0,
+          9
+        ],
+        "normal": [
+          -1,
+          0,
+          0
+        ],
+        "pointMethod": "mesh_witness",
+        "positionErrorBoundMm": 0.024999999999999467,
+        "pathParameterBracket": [
+          0.4446875,
+          0.445
+        ]
+      },
+      "lastSafeVerified": true
+    },
+    {
+      "speed": 1,
+      "state": "PAUSED_COLLISION",
+      "source": {
+        "physicalLine": 4,
+        "blockNumber": 350,
+        "sourceText": "N350 G1 X10 F300",
+        "programId": "SCENARIO-FIXTURE",
+        "programSha256": "0e1f3f6351281e8bf0599efd09f2b0a643a5d2f30ddc312c632f1c8dde12935d",
+        "instructionId": 1,
+        "segmentIndex": 35
+      },
+      "contact": {
+        "frame": "machine",
+        "workFrame": "G54",
+        "unit": "mm",
+        "point": [
+          -0.1,
+          -0.000014957311884389313,
+          5.999990028458744
+        ],
+        "pointInWork": [
+          -0.1,
+          -0.000014957311884389313,
+          5.999990028458744
+        ],
+        "toolPoint": [
+          -0.09999999999999964,
+          0,
+          9
+        ],
+        "normal": [
+          -1,
+          0,
+          0
+        ],
+        "pointMethod": "mesh_witness",
+        "positionErrorBoundMm": 0.024999999999999467,
+        "pathParameterBracket": [
+          0.4446875,
+          0.445
+        ]
+      },
+      "lastSafeVerified": true
+    },
+    {
+      "speed": 20,
+      "state": "PAUSED_COLLISION",
+      "source": {
+        "physicalLine": 4,
+        "blockNumber": 350,
+        "sourceText": "N350 G1 X10 F300",
+        "programId": "SCENARIO-FIXTURE",
+        "programSha256": "0e1f3f6351281e8bf0599efd09f2b0a643a5d2f30ddc312c632f1c8dde12935d",
+        "instructionId": 1,
+        "segmentIndex": 35
+      },
+      "contact": {
+        "frame": "machine",
+        "workFrame": "G54",
+        "unit": "mm",
+        "point": [
+          -0.09999999999999999,
+          -0.022281425330339832,
+          8
+        ],
+        "pointInWork": [
+          -0.09999999999999999,
+          -0.022281425330339832,
+          8
+        ],
+        "toolPoint": [
+          -1.09765625,
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          0,
+          -1
+        ],
+        "pointMethod": "mesh_witness",
+        "positionErrorBoundMm": 0.031249999999998224,
+        "pathParameterBracket": [
+          0.444921875,
+          0.4453125
+        ]
+      },
+      "lastSafeVerified": true
+    },
+    {
+      "speed": "source_step",
+      "state": "PAUSED_COLLISION",
+      "source": {
+        "physicalLine": 4,
+        "blockNumber": 350,
+        "sourceText": "N350 G1 X10 F300",
+        "programId": "SCENARIO-FIXTURE",
+        "programSha256": "0e1f3f6351281e8bf0599efd09f2b0a643a5d2f30ddc312c632f1c8dde12935d",
+        "instructionId": 1,
+        "segmentIndex": 35
+      },
+      "contact": {
+        "frame": "machine",
+        "workFrame": "G54",
+        "unit": "mm",
+        "point": [
+          -0.09999999999999999,
+          -0.022281425330339832,
+          8
+        ],
+        "pointInWork": [
+          -0.09999999999999999,
+          -0.022281425330339832,
+          8
+        ],
+        "toolPoint": [
+          -1.09765625,
+          0,
+          9
+        ],
+        "normal": [
+          0,
+          0,
+          -1
+        ],
+        "pointMethod": "mesh_witness",
+        "positionErrorBoundMm": 0.031249999999998224,
+        "pathParameterBracket": [
+          0.444921875,
+          0.4453125
+        ]
+      },
+      "lastSafeVerified": true
+    }
+  ]
+}

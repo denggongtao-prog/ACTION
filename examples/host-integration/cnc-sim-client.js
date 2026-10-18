@@ -1,0 +1,114 @@
+/** Reference host adapter for protocol 1.0. No framework or third-party dependencies. */
+export const CRITICAL_EVENTS=new Set(['COLLISION','LIMIT','INDETERMINATE','ERROR','TOOL_CHANGE','COMPLETED']);
+export class CncSimClient {
+  constructor(frame,url,{onMessage=()=>{},onEvent=()=>{},onError=console.error,persistEvent}={}){
+    this.frame=frame;this.url=new URL(url,location.href);this.origin=this.url.origin;
+    this.channelId=crypto.randomUUID();this.context=null;this.connected=false;this.loaded=false;
+    this.pending=new Map();this.revisions=new Map();this.eventQueue=Promise.resolve();
+    this.onMessage=onMessage;this.onEvent=onEvent;this.onError=onError;
+    this.persistEvent=persistEvent??(message=>{
+      const key='cnc-host-manual-events:'+this.origin,events=JSON.parse(localStorage.getItem(key)??'[]');
+      const duplicate=events.some(e=>e.jobId===message.jobId&&e.revision===message.revision&&e.runId===message.runId&&e.payload.eventId===message.payload.eventId);
+      if(!duplicate){events.push(message);localStorage.setItem(key,JSON.stringify(events));}
+      return !duplicate;
+    });
+    this.receive=event=>this._receive(event);
+    this.frameLoaded=()=>{
+      this.connected=false;this.loaded=false;this._rejectPending(new Error('IFRAME_RELOADED：请重新查询历史或载入任务'));
+      clearInterval(this.helloTimer);this._hello();this.helloTimer=setInterval(()=>this._hello(),400);
+    };
+    window.addEventListener('message',this.receive);frame.addEventListener('load',this.frameLoaded);
+  }
+  get identity(){return this.context?structuredClone(this.context):null;}
+  connect(){
+    if(this.connected)return Promise.resolve(this.ready);
+    if(this.handshake)return this.handshake.promise;
+    let resolve,reject;const promise=new Promise((yes,no)=>{resolve=yes;reject=no;});
+    this.handshake={promise,resolve,reject,timer:setTimeout(()=>{clearInterval(this.helloTimer);this.handshake=null;reject(new Error('HELLO超时：检查来源白名单、iframe地址和CSP'));},15000)};
+    this.frame.src=this.url.href;return promise;
+  }
+  _envelope(type,payload={},identity=this.context){
+    return {protocol:'cnc-sim',version:'1.0',type,messageId:crypto.randomUUID(),channelId:this.channelId,...identity,payload};
+  }
+  _post(message){this.frame.contentWindow.postMessage(message,this.origin);}
+  _hello(){this._post(this._envelope('HELLO',{},null));}
+  _adopt(message){
+    if(typeof message.jobId==='string'&&Number.isSafeInteger(message.revision)&&typeof message.runId==='string'){
+      this.context={jobId:message.jobId,revision:message.revision,runId:message.runId};
+      this.revisions.set(message.jobId,Math.max(message.revision,this.revisions.get(message.jobId)??0));
+    }
+  }
+  _receive(event){
+    if(event.origin!==this.origin||event.source!==this.frame.contentWindow)return;
+    const m=event.data;if(!m||m.protocol!=='cnc-sim'||m.version!=='1.0'||m.channelId!==this.channelId||!m.payload)return;
+    if(m.type==='SIM_READY'){
+      this.ready=m.payload;this.connected=true;clearInterval(this.helloTimer);
+      if(this.handshake){clearTimeout(this.handshake.timer);this.handshake.resolve(m);this.handshake=null;}
+    }
+    // ACK only critical EVENT TYPES. COMMAND_ACK also contains eventId and must never be ACKed again.
+    if(CRITICAL_EVENTS.has(m.type)&&typeof m.payload.eventId==='string'){
+      this.eventQueue=this.eventQueue.then(async()=>{
+        const fresh=await this.persistEvent(structuredClone(m)); // Failure => no ACK; server retains/retries.
+        this._post(this._envelope('EVENT_ACK',{eventId:m.payload.eventId},{jobId:m.jobId,revision:m.revision,runId:m.runId}));
+        if(fresh!==false)this.onEvent(m);
+      }).catch(error=>this.onError(error));return;
+    }
+    const pending=this.pending.get(m.replyTo);
+    if(pending){
+      clearTimeout(pending.timer);this.pending.delete(m.replyTo);
+      if(['JOB_READY','STATE'].includes(m.type)||(m.type==='COMMAND_ERROR'&&(pending.type==='LOAD_JOB'||m.payload.code==='STALE_RUN')))this._adopt(m);
+      if(m.type==='JOB_READY')this.loaded=true;
+      if(m.type==='STATE')this.loaded=!!m.payload.state;
+      if(m.type==='COMMAND_ERROR'){
+        const identity=typeof m.jobId==='string'&&Number.isSafeInteger(m.revision)&&typeof m.runId==='string'?{jobId:m.jobId,revision:m.revision,runId:m.runId}:null;
+        pending.reject(Object.assign(new Error(m.payload.message),m.payload,{identity}));
+      }else pending.resolve(m);
+    }
+    this.onMessage(m);
+  }
+  request(type,payload={}, {identity=this.context,timeoutMs=15000,retries=1}={}){
+    if(!this.connected)return Promise.reject(new Error('请先完成HELLO握手'));
+    if(type!=='PING'&&!identity)return Promise.reject(new Error('此命令需要jobId/revision/runId'));
+    // Keep an immutable copy and no transfer list, so a retry can reuse exactly the same bytes/messageId.
+    const message=structuredClone(this._envelope(type,payload,identity));
+    return new Promise((resolve,reject)=>{
+      let attempt=0;
+      const record={type,resolve,reject,timer:null};
+      const send=()=>{
+        try{this._post(message);}catch(error){this.pending.delete(message.messageId);reject(error);return;}
+        record.timer=setTimeout(()=>{
+          if(attempt++<retries)send();else{this.pending.delete(message.messageId);reject(new Error(`${type}超时：服务端可能已执行，请查询状态对账`));}
+        },timeoutMs);
+      };
+      this.pending.set(message.messageId,record);send();
+    });
+  }
+  async loadJob(job,{jobId='manual-example',revision,runId=crypto.randomUUID()}={}){
+    const nextRevision=revision??Math.max(this.revisions.get(jobId)??0,this.context?.jobId===jobId?this.context.revision:0)+1;
+    this.context={jobId,revision:nextRevision,runId};this.revisions.set(jobId,nextRevision);this.loaded=false;
+    return this.request('LOAD_JOB',job,{timeoutMs:60000});
+  }
+  start(){return this.request('START');}
+  pause(){return this.request('PAUSE');}
+  resume(){return this.request('RESUME');}
+  step(){return this.request('STEP');}
+  reset(){return this.request('RESET');} // Adopt returned STATE identity; do not invent the new runId.
+  seekLine(physicalLine){return this.request('SEEK_LINE',{physicalLine});}
+  setSpeed(speed){return this.request('SET_SPEED',{speed});}
+  _read(type,identity,followCurrent){
+    return this.request(type,{}, {identity}).catch(error=>{
+      // A lost RESET/SEEK reply can leave local identity stale. Only retry reads, once.
+      // Explicit historical queries must remain historical queries and may legitimately fail.
+      if(followCurrent&&error.code==='STALE_RUN'&&this.context)return this.request(type,{}, {identity:this.context});
+      throw error;
+    });
+  }
+  getState(identity){return this._read('GET_STATE',identity??this.context,identity===undefined);}
+  getReport(identity){return this._read('GET_REPORT',identity??this.context,identity===undefined);}
+  _rejectPending(error){for(const p of this.pending.values()){clearTimeout(p.timer);p.reject(error);}this.pending.clear();}
+  dispose(){
+    window.removeEventListener('message',this.receive);this.frame.removeEventListener('load',this.frameLoaded);clearInterval(this.helloTimer);
+    if(this.handshake){clearTimeout(this.handshake.timer);this.handshake.reject(new Error('连接已释放'));this.handshake=null;}
+    this._rejectPending(new Error('连接已释放'));this.connected=false;
+  }
+}

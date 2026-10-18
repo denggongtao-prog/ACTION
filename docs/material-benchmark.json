@@ -1,0 +1,35 @@
+{
+  "runtime": "v24.14.1",
+  "platform": "win32",
+  "measurement": "Node.js deterministic CPU/mesh benchmark; not browser FPS or peak memory",
+  "rows": [
+    {
+      "requestedCellMm": 0.5,
+      "grid": [
+        200,
+        160
+      ],
+      "initializeMs": 4.8,
+      "initialMeshMs": 44.9,
+      "computeAndMeshMs": 77,
+      "maxTickMs": 3.6,
+      "ticks": 48,
+      "transmittedMB": 34.06,
+      "removedVolumeMm3": 7670.611
+    },
+    {
+      "requestedCellMm": 0.25,
+      "grid": [
+        400,
+        320
+      ],
+      "initializeMs": 17.6,
+      "initialMeshMs": 209.7,
+      "computeAndMeshMs": 165.7,
+      "maxTickMs": 6.3,
+      "ticks": 48,
+      "transmittedMB": 102.63,
+      "removedVolumeMm3": 7670.969
+    }
+  ]
+}

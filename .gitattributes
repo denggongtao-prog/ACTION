@@ -1,0 +1,3 @@
+# Preserve the supplied CAD/program archive byte-for-byte, including original CRLF.
+# Inspect program text directly; do not normalize or format customer source files.
+案例库/** -text -diff

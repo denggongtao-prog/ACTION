@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>上位网页接口接入示例</title>
+<style>body{font:14px/1.6 system-ui,'Microsoft YaHei',sans-serif;margin:24px;color:#263b35}h1{font-size:22px}label{display:block;margin:10px 0}input[type=url]{width:min(700px,90%)}input,button,select,textarea{font:inherit;padding:6px}button{margin:4px}textarea{width:100%;box-sizing:border-box;height:260px;font:12px/1.5 monospace}.layout{display:grid;grid-template-columns:minmax(340px,1fr) minmax(320px,1fr);gap:20px}iframe{width:100%;height:850px;border:1px solid #ccd6cf}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f3f6f2;padding:12px;max-height:350px;overflow:auto}.error{color:#a43f25}.hint{font-size:12px;color:#637068}@media(max-width:900px){.layout{grid-template-columns:1fr}}</style></head>
+<body><h1>上位网页通讯接口示例</h1><p class="hint">源代码参考示例：通过HTTP服务访问，默认接入同站点仿真页。跨域时先配置仿真页来源白名单与CSP。</p>
+<label>仿真页面地址 <input id="url" type="url"><button id="connect">连接</button><span id="connection" role="status">未连接</span></label>
+<div class="layout"><section><label>完整任务 JSON<textarea id="job" aria-label="示例任务JSON" spellcheck="false"></textarea></label>
+<label>可选 GLB/STL 文件 <input id="model" type="file" accept=".glb,.stl"><select id="role" aria-label="示例模型角色"><option value="target">成品参考</option><option value="fixture">夹具</option></select></label>
+<button id="load">下发任务</button><button data-command="start">开始</button><button data-command="pause">暂停</button><button data-command="resume">继续</button><button data-command="step">单步</button><button data-command="reset">重置</button>
+<label>倍率 <input id="speed" type="number" min="0.25" max="20" value="20" step="0.25"><button id="set-speed">应用倍率</button></label>
+<label>回看物理行 <input id="line" type="number" min="1" value="1"><button id="seek">回看</button></label>
+<button id="state">查询状态</button><button id="report">获取报告</button><p id="identity"></p><p id="error" class="error" role="alert"></p>
+<h2>最近消息</h2><pre id="messages"></pre><h2>报告</h2><pre id="result"></pre></section>
+<iframe id="simulation" title="接口示例中的机床仿真"></iframe></div>
+<script type="module">
+import {CncSimClient} from './cnc-sim-client.js';
+const $=id=>document.getElementById(id),frame=$('simulation');let client;
+$('url').value=new URL('../../index.html?instanceId=host-manual-example',location.href).href;
+$('job').value=JSON.stringify(await(await fetch('./sample-job.json')).json(),null,2);
+function show(message){$('messages').textContent=(message.type+' '+JSON.stringify(message.payload)+'\n'+$('messages').textContent).slice(0,12000);$('identity').textContent=JSON.stringify(client?.identity??null);}
+function fail(error){$('error').textContent=error.message;}
+function action(id,work){$(id).onclick=async()=>{try{$('error').textContent='';await work();$('identity').textContent=JSON.stringify(client?.identity??null);}catch(error){fail(error);}};}
+action('connect',async()=>{client?.dispose();client=new CncSimClient(frame,$('url').value,{onMessage:show,onEvent:show,onError:fail});window.exampleClient=client;await client.connect();$('connection').textContent='已连接';});
+action('load',async()=>{
+  const job=JSON.parse($('job').value),file=$('model').files[0];
+  if(file){const format=file.name.split('.').pop().toLowerCase();if(!['glb','stl'].includes(format))throw new Error('请选择GLB或STL');
+    job.assets=[...(job.assets??[]),{objectId:'uploaded-model',role:$('role').value,format,unit:'mm',buffer:await file.arrayBuffer(),poseInM:{translationMm:[0,0,0],quaternionXYZW:[0,0,0,1]}}];}
+  await client.loadJob(job);
+});
+for(const button of document.querySelectorAll('[data-command]'))button.onclick=async()=>{try{$('error').textContent='';await client[button.dataset.command]();$('identity').textContent=JSON.stringify(client.identity);}catch(error){fail(error);}};
+action('set-speed',()=>client.setSpeed(Number($('speed').value)));action('seek',()=>client.seekLine(Number($('line').value)));
+action('state',async()=>{$('result').textContent=JSON.stringify((await client.getState()).payload,null,2);});
+action('report',async()=>{$('result').textContent=JSON.stringify((await client.getReport()).payload,null,2);});
+window.addEventListener('pagehide',()=>client?.dispose());
+</script></body></html>

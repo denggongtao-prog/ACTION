@@ -1,0 +1,33 @@
+# Replace all example domains and certificate paths before installation.
+# Copy dist/ contents into /srv/cnc-site/cnc/; the app is served at /cnc/.
+server {
+    listen 443 ssl;
+    server_name sim.example.edu;
+    ssl_certificate     /etc/letsencrypt/live/sim.example.edu/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/sim.example.edu/privkey.pem;
+
+    root /srv/cnc-site;
+    index index.html;
+    server_tokens off;
+
+    add_header X-Content-Type-Options nosniff always;
+    add_header Referrer-Policy strict-origin-when-cross-origin always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+    # frame-ancestors must be an HTTP response header; a <meta> tag cannot grant embedding.
+    # Allow exact HTTPS parent and model origins; never substitute *.
+    # CSS inline styles are used for Vue progress/position bindings; JavaScript remains self-only.
+    add_header Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' blob: https://models.example.edu; worker-src 'self'; frame-src 'self'; frame-ancestors 'self' https://teaching.example.edu https://lms.example.edu; base-uri 'self'; form-action 'none'; object-src 'none'" always;
+
+    location = /cnc { return 308 /cnc/; }
+    location /cnc/ { try_files $uri $uri/ =404; }
+    # Vite emits content-hashed files here. Do not override add_header in a child
+    # location without repeating the security headers (nginx inheritance rule).
+    location /cnc/assets/ { try_files $uri =404; expires 1y; }
+    location / { return 404; }
+}
+
+server {
+    listen 80;
+    server_name sim.example.edu;
+    return 308 https://sim.example.edu$request_uri;
+}

@@ -1,0 +1,16 @@
+{
+  "dialectId": "milling-basic-v1",
+  "program": {
+    "programId": "HOST-EXAMPLE",
+    "text": "G21 G90 G17 G94\nT1 M6\nM3 S3000\nG0 X-20 Y0 Z5\nG1 Z-2 F300\nG1 X20 F600\nG0 Z30\nT2 M6\nM3 S4500\nG0 X0 Y-10 Z5\nG1 Z-3 F300\nG1 Y10 F600\nG0 Z30\nM30"
+  },
+  "stock": {"objectId":"stock-1","kind":"box","sizeMm":[100,80,20],"minCornerInW":[-50,-40,-20]},
+  "tools": [
+    {"toolId":"tool-1","toolNumber":1,"type":"flat_endmill","diameterMm":10,"cuttingLengthMm":20,"gaugeLengthMm":50,"shaftDiameterMm":10,"holder":{"diameterMm":28,"lengthMm":30}},
+    {"toolId":"tool-2","toolNumber":2,"type":"ball_endmill","diameterMm":6,"cuttingLengthMm":16,"gaugeLengthMm":45,"shaftDiameterMm":6,"holder":{"diameterMm":24,"lengthMm":30}}
+  ],
+  "initialPositionMm": [0,0,40],
+  "assets": [],
+  "workOffsetsMm": {"G54":{"x":0,"y":0,"z":0}},
+  "simulation": {"stockCellMm":0.5,"arcChordToleranceMm":0.02,"mode":"cut","checkCollisions":true,"stopOnCollision":false}
+}

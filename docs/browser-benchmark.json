@@ -1,0 +1,2421 @@
+{
+  "schemaVersion": 1,
+  "measuredAt": "2026-10-18T12:10:24.310Z",
+  "url": "http://127.0.0.1:8786/",
+  "measurement": "Real headless Edge UI + Worker run. RAF intervals are main-window callback intervals, not GPU frame timings. Sampled JS heap is not total process, Worker, GPU, or full-run peak memory.",
+  "environment": {
+    "browserChannel": "msedge",
+    "headless": true,
+    "browserVersion": "155.0.4283.60",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "deviceScaleFactor": 1,
+    "nodeVersion": "v24.14.1",
+    "host": {
+      "platform": "win32",
+      "release": "10.0.26200",
+      "version": "Windows 11 Pro",
+      "arch": "x64",
+      "cpuModel": "Intel(R) Core(TM) Ultra 7 265K",
+      "logicalCpuCount": 20
+    },
+    "browser": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+      "platform": "Win32",
+      "hardwareConcurrency": 20,
+      "deviceMemoryGiB": 32,
+      "userAgentData": {
+        "architecture": "x86",
+        "bitness": "64",
+        "brands": [
+          {
+            "brand": "Microsoft Edge",
+            "version": "155"
+          },
+          {
+            "brand": "Chromium",
+            "version": "155"
+          },
+          {
+            "brand": "Not(A:Brand",
+            "version": "24"
+          }
+        ],
+        "fullVersionList": [
+          {
+            "brand": "Microsoft Edge",
+            "version": "155.0.4283.60"
+          },
+          {
+            "brand": "Chromium",
+            "version": "155.0.8059.80"
+          },
+          {
+            "brand": "Not(A:Brand",
+            "version": "24.0.0.0"
+          }
+        ],
+        "mobile": false,
+        "model": "",
+        "platform": "Windows",
+        "platformVersion": "19.0.0"
+      },
+      "gpu": {
+        "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (NVIDIA)",
+        "unmaskedRenderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 (0x00002F04) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "debugRendererInfoAvailable": true
+      },
+      "visibilityState": "visible",
+      "performanceMemoryAvailable": true
+    }
+  },
+  "scenario": {
+    "name": "Default standalone normal program; unchanged UI input",
+    "requestedSpeed1SampleMs": 2500,
+    "program": {
+      "physicalLineCount": 20,
+      "characters": 218,
+      "sha256": "e7befad83d24a88e937bb455bbd2c8b7f4bae673eeb403bfb01dabc2014b4559",
+      "instructionCount": 22,
+      "motionCountFromUi": 11
+    },
+    "externalAssets": {
+      "configuredCountFromUi": 0,
+      "triangleCount": 0,
+      "triangleCountSource": "exported report asset manifest"
+    },
+    "initialUi": {
+      "stateText": "就绪",
+      "requestedGridMm": "0.5",
+      "mode": "cut",
+      "actualCellText": "0.50 × 0.50",
+      "removedVolumeText": "0.0",
+      "remainingPercentText": "100.0",
+      "externalAssetCountText": "0",
+      "motionCountText": "11",
+      "verificationText": "正在检查配置范围检查刀具、剩余材料、已载入夹具与配置的机床对象对。保守边界命中单独标记，未配置的部件不在覆盖范围内。",
+      "horizontalOverflow": false
+    },
+    "finalUi": {
+      "stateText": "已完成",
+      "requestedGridMm": "0.5",
+      "mode": "cut",
+      "actualCellText": "0.50 × 0.50",
+      "removedVolumeText": "7670.6",
+      "remainingPercentText": "95.2",
+      "externalAssetCountText": "0",
+      "motionCountText": "11",
+      "verificationText": "已完成配置范围检查检查刀具、剩余材料、已载入夹具与配置的机床对象对。保守边界命中单独标记，未配置的部件不在覆盖范围内。",
+      "horizontalOverflow": false
+    },
+    "initialStock": {
+      "representation": "z_dexel",
+      "revision": 2,
+      "cellSizeMm": [
+        0.5,
+        0.5
+      ],
+      "grid": [
+        200,
+        160
+      ],
+      "initialVolumeMm3": 160000,
+      "removedVolumeMm3": 0,
+      "remainingVolumeMm3": 160000,
+      "remainingFraction": 1
+    },
+    "finalStock": {
+      "representation": "z_dexel",
+      "revision": 621,
+      "cellSizeMm": [
+        0.5,
+        0.5
+      ],
+      "grid": [
+        200,
+        160
+      ],
+      "initialVolumeMm3": 160000,
+      "removedVolumeMm3": 7670.61102846761,
+      "remainingVolumeMm3": 152329.3889715324,
+      "remainingFraction": 0.9520586810720775
+    }
+  },
+  "timing": {
+    "observedCompletionWallMs": 4411.454,
+    "completionWallTimeDefinition": "Monotonic wall time from before Start click to observed COMPLETED; includes automation and UI observation overhead.",
+    "bySpeed": {
+      "1": {
+        "intervalCount": 151,
+        "minMs": 16.5,
+        "medianMs": 16.7,
+        "p95Ms": 16.8,
+        "p99Ms": 16.8,
+        "maxMs": 16.8,
+        "meanMs": 16.666,
+        "totalIntervalMs": 2516.6,
+        "rawIntervalMs": [
+          16.700000000000045,
+          16.700000000000045,
+          16.59999999999991,
+          16.700000000000045,
+          16.700000000000045,
+          16.699999999999932,
+          16.600000000000023,
+          16.600000000000023,
+          16.799999999999955,
+          16.600000000000023,
+          16.600000000000023,
+          16.699999999999932,
+          16.700000000000045,
+          16.59999999999991,
+          16.700000000000045,
+          16.700000000000045,
+          16.700000000000045,
+          16.59999999999991,
+          16.700000000000045,
+          16.700000000000045,
+          16.700000000000045,
+          16.59999999999991,
+          16.700000000000045,
+          16.700000000000045,
+          16.59999999999991,
+          16.700000000000045,
+          16.59999999999991,
+          16.700000000000045,
+          16.700000000000045,
+          16.700000000000045,
+          16.59999999999991,
+          16.700000000000045,
+          16.59999999999991,
+          16.700000000000045,
+          16.700000000000045,
+          16.700000000000045,
+          16.59999999999991,
+          16.59999999999991,
+          16.700000000000045,
+          16.700000000000045,
+          16.59999999999991,
+          16.700000000000045,
+          16.700000000000045,
+          16.59999999999991,
+          16.800000000000182,
+          16.59999999999991,
+          16.700000000000045,
+          16.700000000000045,
+          16.59999999999991,
+          16.700000000000045,
+          16.59999999999991,
+          16.700000000000045,
+          16.700000000000045,
+          16.59999999999991,
+          16.700000000000045,
+          16.59999999999991,
+          16.800000000000182,
+          16.59999999999991,
+          16.59999999999991,
+          16.800000000000182,
+          16.59999999999991,
+          16.59999999999991,
+          16.800000000000182,
+          16.59999999999991,
+          16.700000000000045,
+          16.59999999999991,
+          16.700000000000045,
+          16.59999999999991,
+          16.800000000000182,
+          16.59999999999991,
+          16.59999999999991,
+          16.800000000000182,
+          16.59999999999991,
+          16.700000000000045,
+          16.59999999999991,
+          16.600000000000136,
+          16.799999999999727,
+          16.600000000000364,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.699999999999818,
+          16.600000000000364,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.699999999999818,
+          16.600000000000364,
+          16.699999999999818,
+          16.699999999999818,
+          16.600000000000364,
+          16.59999999999991,
+          16.799999999999727,
+          16.600000000000364,
+          16.59999999999991,
+          16.699999999999818,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.59999999999991,
+          16.800000000000182,
+          16.59999999999991,
+          16.700000000000273,
+          16.59999999999991,
+          16.799999999999727,
+          16.5,
+          16.800000000000182,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273,
+          16.59999999999991,
+          16.799999999999727,
+          16.5,
+          16.700000000000273,
+          16.699999999999818,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273
+        ]
+      },
+      "20": {
+        "intervalCount": 108,
+        "minMs": 16.4,
+        "medianMs": 16.7,
+        "p95Ms": 16.8,
+        "p99Ms": 16.8,
+        "maxMs": 16.9,
+        "meanMs": 16.667,
+        "totalIntervalMs": 1800,
+        "rawIntervalMs": [
+          16.59999999999991,
+          16.800000000000182,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.700000000000273,
+          16.59999999999991,
+          16.699999999999818,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.700000000000273,
+          16.59999999999991,
+          16.699999999999818,
+          16.700000000000273,
+          16.59999999999991,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.59999999999991,
+          16.700000000000273,
+          16.699999999999818,
+          16.700000000000273,
+          16.599999999999454,
+          16.700000000000728,
+          16.699999999999818,
+          16.599999999999454,
+          16.700000000000728,
+          16.599999999999454,
+          16.699999999999818,
+          16.600000000000364,
+          16.800000000000182,
+          16.5,
+          16.800000000000182,
+          16.699999999999818,
+          16.5,
+          16.800000000000182,
+          16.599999999999454,
+          16.699999999999818,
+          16.600000000000364,
+          16.699999999999818,
+          16.699999999999818,
+          16.600000000000364,
+          16.699999999999818,
+          16.600000000000364,
+          16.699999999999818,
+          16.699999999999818,
+          16.699999999999818,
+          16.700000000000728,
+          16.599999999999454,
+          16.600000000000364,
+          16.699999999999818,
+          16.699999999999818,
+          16.699999999999818,
+          16.600000000000364,
+          16.699999999999818,
+          16.600000000000364,
+          16.800000000000182,
+          16.599999999999454,
+          16.699999999999818,
+          16.700000000000728,
+          16.699999999999818,
+          16.599999999999454,
+          16.700000000000728,
+          16.599999999999454,
+          16.699999999999818,
+          16.700000000000728,
+          16.599999999999454,
+          16.699999999999818,
+          16.900000000000546,
+          16.399999999999636,
+          16.699999999999818,
+          16.600000000000364,
+          16.699999999999818,
+          16.600000000000364,
+          16.699999999999818,
+          16.699999999999818,
+          16.699999999999818,
+          16.600000000000364,
+          16.699999999999818,
+          16.600000000000364,
+          16.699999999999818,
+          16.699999999999818,
+          16.699999999999818,
+          16.700000000000728
+        ]
+      }
+    },
+    "stateTransitions": [
+      {
+        "atMs": 746.4,
+        "state": "就绪",
+        "speed": "1"
+      },
+      {
+        "atMs": 796.3,
+        "state": "运行中",
+        "speed": "1"
+      },
+      {
+        "atMs": 5146.2,
+        "state": "已完成",
+        "speed": "20"
+      }
+    ],
+    "samplingWindowMs": 4412.300000011921
+  },
+  "memory": {
+    "metric": "main_window.performance.memory.usedJSHeapSize",
+    "unit": "bytes",
+    "availability": "available",
+    "maxSampledJsHeapBytes": 58582358,
+    "sampleCount": 261,
+    "definition": "Maximum of visible main-window JS heap samples taken during RUNNING RAF callbacks. Not total application memory; Worker/GPU memory and unobserved peaks are excluded.",
+    "samples": [
+      {
+        "atMs": 796.3,
+        "usedJSHeapSizeBytes": 45570332,
+        "speed": "1"
+      },
+      {
+        "atMs": 813,
+        "usedJSHeapSizeBytes": 45570332,
+        "speed": "1"
+      },
+      {
+        "atMs": 829.7,
+        "usedJSHeapSizeBytes": 45570332,
+        "speed": "1"
+      },
+      {
+        "atMs": 846.3,
+        "usedJSHeapSizeBytes": 45570332,
+        "speed": "1"
+      },
+      {
+        "atMs": 863,
+        "usedJSHeapSizeBytes": 46126719,
+        "speed": "1"
+      },
+      {
+        "atMs": 879.7,
+        "usedJSHeapSizeBytes": 46126719,
+        "speed": "1"
+      },
+      {
+        "atMs": 896.4,
+        "usedJSHeapSizeBytes": 46126719,
+        "speed": "1"
+      },
+      {
+        "atMs": 913,
+        "usedJSHeapSizeBytes": 46126719,
+        "speed": "1"
+      },
+      {
+        "atMs": 929.6,
+        "usedJSHeapSizeBytes": 42549443,
+        "speed": "1"
+      },
+      {
+        "atMs": 946.4,
+        "usedJSHeapSizeBytes": 42549443,
+        "speed": "1"
+      },
+      {
+        "atMs": 963,
+        "usedJSHeapSizeBytes": 42549443,
+        "speed": "1"
+      },
+      {
+        "atMs": 979.6,
+        "usedJSHeapSizeBytes": 42549443,
+        "speed": "1"
+      },
+      {
+        "atMs": 996.3,
+        "usedJSHeapSizeBytes": 42994101,
+        "speed": "1"
+      },
+      {
+        "atMs": 1013,
+        "usedJSHeapSizeBytes": 42994101,
+        "speed": "1"
+      },
+      {
+        "atMs": 1029.6,
+        "usedJSHeapSizeBytes": 42994101,
+        "speed": "1"
+      },
+      {
+        "atMs": 1046.3,
+        "usedJSHeapSizeBytes": 43253389,
+        "speed": "1"
+      },
+      {
+        "atMs": 1063,
+        "usedJSHeapSizeBytes": 43253389,
+        "speed": "1"
+      },
+      {
+        "atMs": 1079.7,
+        "usedJSHeapSizeBytes": 43253389,
+        "speed": "1"
+      },
+      {
+        "atMs": 1096.3,
+        "usedJSHeapSizeBytes": 43601861,
+        "speed": "1"
+      },
+      {
+        "atMs": 1113,
+        "usedJSHeapSizeBytes": 43601861,
+        "speed": "1"
+      },
+      {
+        "atMs": 1129.7,
+        "usedJSHeapSizeBytes": 43601861,
+        "speed": "1"
+      },
+      {
+        "atMs": 1146.4,
+        "usedJSHeapSizeBytes": 43601861,
+        "speed": "1"
+      },
+      {
+        "atMs": 1163,
+        "usedJSHeapSizeBytes": 43940973,
+        "speed": "1"
+      },
+      {
+        "atMs": 1179.7,
+        "usedJSHeapSizeBytes": 43940973,
+        "speed": "1"
+      },
+      {
+        "atMs": 1196.4,
+        "usedJSHeapSizeBytes": 43940973,
+        "speed": "1"
+      },
+      {
+        "atMs": 1213,
+        "usedJSHeapSizeBytes": 43940973,
+        "speed": "1"
+      },
+      {
+        "atMs": 1229.7,
+        "usedJSHeapSizeBytes": 44328365,
+        "speed": "1"
+      },
+      {
+        "atMs": 1246.3,
+        "usedJSHeapSizeBytes": 44328365,
+        "speed": "1"
+      },
+      {
+        "atMs": 1263,
+        "usedJSHeapSizeBytes": 44328365,
+        "speed": "1"
+      },
+      {
+        "atMs": 1279.7,
+        "usedJSHeapSizeBytes": 44328365,
+        "speed": "1"
+      },
+      {
+        "atMs": 1296.4,
+        "usedJSHeapSizeBytes": 44698555,
+        "speed": "1"
+      },
+      {
+        "atMs": 1313,
+        "usedJSHeapSizeBytes": 44698555,
+        "speed": "1"
+      },
+      {
+        "atMs": 1329.7,
+        "usedJSHeapSizeBytes": 44698555,
+        "speed": "1"
+      },
+      {
+        "atMs": 1346.3,
+        "usedJSHeapSizeBytes": 44698555,
+        "speed": "1"
+      },
+      {
+        "atMs": 1363,
+        "usedJSHeapSizeBytes": 45001108,
+        "speed": "1"
+      },
+      {
+        "atMs": 1379.7,
+        "usedJSHeapSizeBytes": 45001108,
+        "speed": "1"
+      },
+      {
+        "atMs": 1396.4,
+        "usedJSHeapSizeBytes": 45001108,
+        "speed": "1"
+      },
+      {
+        "atMs": 1413,
+        "usedJSHeapSizeBytes": 45234624,
+        "speed": "1"
+      },
+      {
+        "atMs": 1429.6,
+        "usedJSHeapSizeBytes": 45234624,
+        "speed": "1"
+      },
+      {
+        "atMs": 1446.3,
+        "usedJSHeapSizeBytes": 45234624,
+        "speed": "1"
+      },
+      {
+        "atMs": 1463,
+        "usedJSHeapSizeBytes": 45644380,
+        "speed": "1"
+      },
+      {
+        "atMs": 1479.6,
+        "usedJSHeapSizeBytes": 45644380,
+        "speed": "1"
+      },
+      {
+        "atMs": 1496.3,
+        "usedJSHeapSizeBytes": 45644380,
+        "speed": "1"
+      },
+      {
+        "atMs": 1513,
+        "usedJSHeapSizeBytes": 45934656,
+        "speed": "1"
+      },
+      {
+        "atMs": 1529.6,
+        "usedJSHeapSizeBytes": 45934656,
+        "speed": "1"
+      },
+      {
+        "atMs": 1546.4,
+        "usedJSHeapSizeBytes": 45934656,
+        "speed": "1"
+      },
+      {
+        "atMs": 1563,
+        "usedJSHeapSizeBytes": 45934656,
+        "speed": "1"
+      },
+      {
+        "atMs": 1579.7,
+        "usedJSHeapSizeBytes": 43087354,
+        "speed": "1"
+      },
+      {
+        "atMs": 1596.4,
+        "usedJSHeapSizeBytes": 43087354,
+        "speed": "1"
+      },
+      {
+        "atMs": 1613,
+        "usedJSHeapSizeBytes": 43087354,
+        "speed": "1"
+      },
+      {
+        "atMs": 1629.7,
+        "usedJSHeapSizeBytes": 43332094,
+        "speed": "1"
+      },
+      {
+        "atMs": 1646.3,
+        "usedJSHeapSizeBytes": 43332094,
+        "speed": "1"
+      },
+      {
+        "atMs": 1663,
+        "usedJSHeapSizeBytes": 43332094,
+        "speed": "1"
+      },
+      {
+        "atMs": 1679.7,
+        "usedJSHeapSizeBytes": 43332094,
+        "speed": "1"
+      },
+      {
+        "atMs": 1696.3,
+        "usedJSHeapSizeBytes": 43687694,
+        "speed": "1"
+      },
+      {
+        "atMs": 1713,
+        "usedJSHeapSizeBytes": 43687694,
+        "speed": "1"
+      },
+      {
+        "atMs": 1729.6,
+        "usedJSHeapSizeBytes": 43687694,
+        "speed": "1"
+      },
+      {
+        "atMs": 1746.4,
+        "usedJSHeapSizeBytes": 44014506,
+        "speed": "1"
+      },
+      {
+        "atMs": 1763,
+        "usedJSHeapSizeBytes": 44014506,
+        "speed": "1"
+      },
+      {
+        "atMs": 1779.6,
+        "usedJSHeapSizeBytes": 44014506,
+        "speed": "1"
+      },
+      {
+        "atMs": 1796.4,
+        "usedJSHeapSizeBytes": 44014506,
+        "speed": "1"
+      },
+      {
+        "atMs": 1813,
+        "usedJSHeapSizeBytes": 44277586,
+        "speed": "1"
+      },
+      {
+        "atMs": 1829.6,
+        "usedJSHeapSizeBytes": 44277586,
+        "speed": "1"
+      },
+      {
+        "atMs": 1846.4,
+        "usedJSHeapSizeBytes": 44277586,
+        "speed": "1"
+      },
+      {
+        "atMs": 1863,
+        "usedJSHeapSizeBytes": 44510282,
+        "speed": "1"
+      },
+      {
+        "atMs": 1879.7,
+        "usedJSHeapSizeBytes": 44510282,
+        "speed": "1"
+      },
+      {
+        "atMs": 1896.3,
+        "usedJSHeapSizeBytes": 44510282,
+        "speed": "1"
+      },
+      {
+        "atMs": 1913,
+        "usedJSHeapSizeBytes": 44510282,
+        "speed": "1"
+      },
+      {
+        "atMs": 1929.6,
+        "usedJSHeapSizeBytes": 44869694,
+        "speed": "1"
+      },
+      {
+        "atMs": 1946.4,
+        "usedJSHeapSizeBytes": 44869694,
+        "speed": "1"
+      },
+      {
+        "atMs": 1963,
+        "usedJSHeapSizeBytes": 44869694,
+        "speed": "1"
+      },
+      {
+        "atMs": 1979.6,
+        "usedJSHeapSizeBytes": 45108426,
+        "speed": "1"
+      },
+      {
+        "atMs": 1996.4,
+        "usedJSHeapSizeBytes": 45108426,
+        "speed": "1"
+      },
+      {
+        "atMs": 2013,
+        "usedJSHeapSizeBytes": 45108426,
+        "speed": "1"
+      },
+      {
+        "atMs": 2029.7,
+        "usedJSHeapSizeBytes": 45108426,
+        "speed": "1"
+      },
+      {
+        "atMs": 2046.3,
+        "usedJSHeapSizeBytes": 45390202,
+        "speed": "1"
+      },
+      {
+        "atMs": 2062.9,
+        "usedJSHeapSizeBytes": 45390202,
+        "speed": "1"
+      },
+      {
+        "atMs": 2079.7,
+        "usedJSHeapSizeBytes": 45390202,
+        "speed": "1"
+      },
+      {
+        "atMs": 2096.3,
+        "usedJSHeapSizeBytes": 45390202,
+        "speed": "1"
+      },
+      {
+        "atMs": 2113,
+        "usedJSHeapSizeBytes": 45762426,
+        "speed": "1"
+      },
+      {
+        "atMs": 2129.6,
+        "usedJSHeapSizeBytes": 45762426,
+        "speed": "1"
+      },
+      {
+        "atMs": 2146.3,
+        "usedJSHeapSizeBytes": 45762426,
+        "speed": "1"
+      },
+      {
+        "atMs": 2163,
+        "usedJSHeapSizeBytes": 46029174,
+        "speed": "1"
+      },
+      {
+        "atMs": 2179.6,
+        "usedJSHeapSizeBytes": 46029174,
+        "speed": "1"
+      },
+      {
+        "atMs": 2196.3,
+        "usedJSHeapSizeBytes": 46029174,
+        "speed": "1"
+      },
+      {
+        "atMs": 2213,
+        "usedJSHeapSizeBytes": 46332886,
+        "speed": "1"
+      },
+      {
+        "atMs": 2229.6,
+        "usedJSHeapSizeBytes": 46332886,
+        "speed": "1"
+      },
+      {
+        "atMs": 2246.3,
+        "usedJSHeapSizeBytes": 46332886,
+        "speed": "1"
+      },
+      {
+        "atMs": 2263,
+        "usedJSHeapSizeBytes": 46332886,
+        "speed": "1"
+      },
+      {
+        "atMs": 2279.7,
+        "usedJSHeapSizeBytes": 43487794,
+        "speed": "1"
+      },
+      {
+        "atMs": 2296.3,
+        "usedJSHeapSizeBytes": 43487794,
+        "speed": "1"
+      },
+      {
+        "atMs": 2313,
+        "usedJSHeapSizeBytes": 43487794,
+        "speed": "1"
+      },
+      {
+        "atMs": 2329.6,
+        "usedJSHeapSizeBytes": 43487794,
+        "speed": "1"
+      },
+      {
+        "atMs": 2346.3,
+        "usedJSHeapSizeBytes": 43846010,
+        "speed": "1"
+      },
+      {
+        "atMs": 2363,
+        "usedJSHeapSizeBytes": 43846010,
+        "speed": "1"
+      },
+      {
+        "atMs": 2379.6,
+        "usedJSHeapSizeBytes": 43846010,
+        "speed": "1"
+      },
+      {
+        "atMs": 2396.3,
+        "usedJSHeapSizeBytes": 44096886,
+        "speed": "1"
+      },
+      {
+        "atMs": 2413,
+        "usedJSHeapSizeBytes": 44096886,
+        "speed": "1"
+      },
+      {
+        "atMs": 2429.6,
+        "usedJSHeapSizeBytes": 44096886,
+        "speed": "1"
+      },
+      {
+        "atMs": 2446.3,
+        "usedJSHeapSizeBytes": 44096886,
+        "speed": "1"
+      },
+      {
+        "atMs": 2463,
+        "usedJSHeapSizeBytes": 44497958,
+        "speed": "1"
+      },
+      {
+        "atMs": 2479.7,
+        "usedJSHeapSizeBytes": 44497958,
+        "speed": "1"
+      },
+      {
+        "atMs": 2496.3,
+        "usedJSHeapSizeBytes": 44497958,
+        "speed": "1"
+      },
+      {
+        "atMs": 2513,
+        "usedJSHeapSizeBytes": 44497958,
+        "speed": "1"
+      },
+      {
+        "atMs": 2529.7,
+        "usedJSHeapSizeBytes": 44716602,
+        "speed": "1"
+      },
+      {
+        "atMs": 2546.3,
+        "usedJSHeapSizeBytes": 44716602,
+        "speed": "1"
+      },
+      {
+        "atMs": 2562.9,
+        "usedJSHeapSizeBytes": 44716602,
+        "speed": "1"
+      },
+      {
+        "atMs": 2579.7,
+        "usedJSHeapSizeBytes": 44962226,
+        "speed": "1"
+      },
+      {
+        "atMs": 2596.3,
+        "usedJSHeapSizeBytes": 44962226,
+        "speed": "1"
+      },
+      {
+        "atMs": 2612.9,
+        "usedJSHeapSizeBytes": 44962226,
+        "speed": "1"
+      },
+      {
+        "atMs": 2629.6,
+        "usedJSHeapSizeBytes": 44962226,
+        "speed": "1"
+      },
+      {
+        "atMs": 2646.3,
+        "usedJSHeapSizeBytes": 45175402,
+        "speed": "1"
+      },
+      {
+        "atMs": 2663,
+        "usedJSHeapSizeBytes": 45175402,
+        "speed": "1"
+      },
+      {
+        "atMs": 2679.6,
+        "usedJSHeapSizeBytes": 45175402,
+        "speed": "1"
+      },
+      {
+        "atMs": 2696.3,
+        "usedJSHeapSizeBytes": 45423358,
+        "speed": "1"
+      },
+      {
+        "atMs": 2713,
+        "usedJSHeapSizeBytes": 45423358,
+        "speed": "1"
+      },
+      {
+        "atMs": 2729.6,
+        "usedJSHeapSizeBytes": 45423358,
+        "speed": "1"
+      },
+      {
+        "atMs": 2746.2,
+        "usedJSHeapSizeBytes": 45423358,
+        "speed": "1"
+      },
+      {
+        "atMs": 2763,
+        "usedJSHeapSizeBytes": 45634106,
+        "speed": "1"
+      },
+      {
+        "atMs": 2779.6,
+        "usedJSHeapSizeBytes": 45634106,
+        "speed": "1"
+      },
+      {
+        "atMs": 2796.3,
+        "usedJSHeapSizeBytes": 45634106,
+        "speed": "1"
+      },
+      {
+        "atMs": 2812.9,
+        "usedJSHeapSizeBytes": 45875362,
+        "speed": "1"
+      },
+      {
+        "atMs": 2829.7,
+        "usedJSHeapSizeBytes": 45875362,
+        "speed": "1"
+      },
+      {
+        "atMs": 2846.2,
+        "usedJSHeapSizeBytes": 45875362,
+        "speed": "1"
+      },
+      {
+        "atMs": 2863,
+        "usedJSHeapSizeBytes": 45875362,
+        "speed": "1"
+      },
+      {
+        "atMs": 2879.6,
+        "usedJSHeapSizeBytes": 46096806,
+        "speed": "1"
+      },
+      {
+        "atMs": 2896.3,
+        "usedJSHeapSizeBytes": 46096806,
+        "speed": "1"
+      },
+      {
+        "atMs": 2913,
+        "usedJSHeapSizeBytes": 46096806,
+        "speed": "1"
+      },
+      {
+        "atMs": 2929.6,
+        "usedJSHeapSizeBytes": 46096806,
+        "speed": "1"
+      },
+      {
+        "atMs": 2946.3,
+        "usedJSHeapSizeBytes": 46380790,
+        "speed": "1"
+      },
+      {
+        "atMs": 2962.9,
+        "usedJSHeapSizeBytes": 46380790,
+        "speed": "1"
+      },
+      {
+        "atMs": 2979.7,
+        "usedJSHeapSizeBytes": 46380790,
+        "speed": "1"
+      },
+      {
+        "atMs": 2996.2,
+        "usedJSHeapSizeBytes": 46558050,
+        "speed": "1"
+      },
+      {
+        "atMs": 3012.9,
+        "usedJSHeapSizeBytes": 46558050,
+        "speed": "1"
+      },
+      {
+        "atMs": 3029.6,
+        "usedJSHeapSizeBytes": 46558050,
+        "speed": "1"
+      },
+      {
+        "atMs": 3046.3,
+        "usedJSHeapSizeBytes": 43544982,
+        "speed": "1"
+      },
+      {
+        "atMs": 3063,
+        "usedJSHeapSizeBytes": 43544982,
+        "speed": "1"
+      },
+      {
+        "atMs": 3079.6,
+        "usedJSHeapSizeBytes": 43544982,
+        "speed": "1"
+      },
+      {
+        "atMs": 3096.3,
+        "usedJSHeapSizeBytes": 43544982,
+        "speed": "1"
+      },
+      {
+        "atMs": 3113,
+        "usedJSHeapSizeBytes": 43819510,
+        "speed": "1"
+      },
+      {
+        "atMs": 3129.6,
+        "usedJSHeapSizeBytes": 43819510,
+        "speed": "1"
+      },
+      {
+        "atMs": 3146.2,
+        "usedJSHeapSizeBytes": 43819510,
+        "speed": "1"
+      },
+      {
+        "atMs": 3162.9,
+        "usedJSHeapSizeBytes": 44005574,
+        "speed": "1"
+      },
+      {
+        "atMs": 3179.6,
+        "usedJSHeapSizeBytes": 44005574,
+        "speed": "1"
+      },
+      {
+        "atMs": 3196.3,
+        "usedJSHeapSizeBytes": 44005574,
+        "speed": "1"
+      },
+      {
+        "atMs": 3213,
+        "usedJSHeapSizeBytes": 44254678,
+        "speed": "1"
+      },
+      {
+        "atMs": 3229.6,
+        "usedJSHeapSizeBytes": 44254678,
+        "speed": "1"
+      },
+      {
+        "atMs": 3246.2,
+        "usedJSHeapSizeBytes": 44254678,
+        "speed": "1"
+      },
+      {
+        "atMs": 3262.9,
+        "usedJSHeapSizeBytes": 44254678,
+        "speed": "1"
+      },
+      {
+        "atMs": 3279.6,
+        "usedJSHeapSizeBytes": 44477666,
+        "speed": "1"
+      },
+      {
+        "atMs": 3296.2,
+        "usedJSHeapSizeBytes": 44477666,
+        "speed": "1"
+      },
+      {
+        "atMs": 3312.9,
+        "usedJSHeapSizeBytes": 44477666,
+        "speed": "1"
+      },
+      {
+        "atMs": 3329.6,
+        "usedJSHeapSizeBytes": 44931216,
+        "speed": "20"
+      },
+      {
+        "atMs": 3346.2,
+        "usedJSHeapSizeBytes": 44931216,
+        "speed": "20"
+      },
+      {
+        "atMs": 3363,
+        "usedJSHeapSizeBytes": 44931216,
+        "speed": "20"
+      },
+      {
+        "atMs": 3379.6,
+        "usedJSHeapSizeBytes": 44931216,
+        "speed": "20"
+      },
+      {
+        "atMs": 3396.3,
+        "usedJSHeapSizeBytes": 45216780,
+        "speed": "20"
+      },
+      {
+        "atMs": 3413,
+        "usedJSHeapSizeBytes": 45216780,
+        "speed": "20"
+      },
+      {
+        "atMs": 3429.6,
+        "usedJSHeapSizeBytes": 45216780,
+        "speed": "20"
+      },
+      {
+        "atMs": 3446.2,
+        "usedJSHeapSizeBytes": 46147860,
+        "speed": "20"
+      },
+      {
+        "atMs": 3462.9,
+        "usedJSHeapSizeBytes": 46147860,
+        "speed": "20"
+      },
+      {
+        "atMs": 3479.6,
+        "usedJSHeapSizeBytes": 46147860,
+        "speed": "20"
+      },
+      {
+        "atMs": 3496.3,
+        "usedJSHeapSizeBytes": 47951724,
+        "speed": "20"
+      },
+      {
+        "atMs": 3512.9,
+        "usedJSHeapSizeBytes": 47951724,
+        "speed": "20"
+      },
+      {
+        "atMs": 3529.6,
+        "usedJSHeapSizeBytes": 47951724,
+        "speed": "20"
+      },
+      {
+        "atMs": 3546.3,
+        "usedJSHeapSizeBytes": 47951724,
+        "speed": "20"
+      },
+      {
+        "atMs": 3563,
+        "usedJSHeapSizeBytes": 48989428,
+        "speed": "20"
+      },
+      {
+        "atMs": 3579.6,
+        "usedJSHeapSizeBytes": 48989428,
+        "speed": "20"
+      },
+      {
+        "atMs": 3596.2,
+        "usedJSHeapSizeBytes": 48989428,
+        "speed": "20"
+      },
+      {
+        "atMs": 3612.9,
+        "usedJSHeapSizeBytes": 49882384,
+        "speed": "20"
+      },
+      {
+        "atMs": 3629.6,
+        "usedJSHeapSizeBytes": 49882384,
+        "speed": "20"
+      },
+      {
+        "atMs": 3646.3,
+        "usedJSHeapSizeBytes": 49882384,
+        "speed": "20"
+      },
+      {
+        "atMs": 3662.9,
+        "usedJSHeapSizeBytes": 44548050,
+        "speed": "20"
+      },
+      {
+        "atMs": 3679.6,
+        "usedJSHeapSizeBytes": 44548050,
+        "speed": "20"
+      },
+      {
+        "atMs": 3696.3,
+        "usedJSHeapSizeBytes": 44548050,
+        "speed": "20"
+      },
+      {
+        "atMs": 3712.9,
+        "usedJSHeapSizeBytes": 45550582,
+        "speed": "20"
+      },
+      {
+        "atMs": 3729.6,
+        "usedJSHeapSizeBytes": 45550582,
+        "speed": "20"
+      },
+      {
+        "atMs": 3746.2,
+        "usedJSHeapSizeBytes": 45550582,
+        "speed": "20"
+      },
+      {
+        "atMs": 3762.9,
+        "usedJSHeapSizeBytes": 45550582,
+        "speed": "20"
+      },
+      {
+        "atMs": 3779.6,
+        "usedJSHeapSizeBytes": 46470222,
+        "speed": "20"
+      },
+      {
+        "atMs": 3796.2,
+        "usedJSHeapSizeBytes": 46470222,
+        "speed": "20"
+      },
+      {
+        "atMs": 3812.9,
+        "usedJSHeapSizeBytes": 46470222,
+        "speed": "20"
+      },
+      {
+        "atMs": 3829.6,
+        "usedJSHeapSizeBytes": 47717374,
+        "speed": "20"
+      },
+      {
+        "atMs": 3846.2,
+        "usedJSHeapSizeBytes": 47717374,
+        "speed": "20"
+      },
+      {
+        "atMs": 3862.9,
+        "usedJSHeapSizeBytes": 47717374,
+        "speed": "20"
+      },
+      {
+        "atMs": 3879.6,
+        "usedJSHeapSizeBytes": 48329354,
+        "speed": "20"
+      },
+      {
+        "atMs": 3896.2,
+        "usedJSHeapSizeBytes": 48329354,
+        "speed": "20"
+      },
+      {
+        "atMs": 3912.9,
+        "usedJSHeapSizeBytes": 48329354,
+        "speed": "20"
+      },
+      {
+        "atMs": 3929.6,
+        "usedJSHeapSizeBytes": 49402138,
+        "speed": "20"
+      },
+      {
+        "atMs": 3946.2,
+        "usedJSHeapSizeBytes": 49402138,
+        "speed": "20"
+      },
+      {
+        "atMs": 3962.9,
+        "usedJSHeapSizeBytes": 49402138,
+        "speed": "20"
+      },
+      {
+        "atMs": 3979.6,
+        "usedJSHeapSizeBytes": 50195246,
+        "speed": "20"
+      },
+      {
+        "atMs": 3996.2,
+        "usedJSHeapSizeBytes": 50195246,
+        "speed": "20"
+      },
+      {
+        "atMs": 4012.9,
+        "usedJSHeapSizeBytes": 50195246,
+        "speed": "20"
+      },
+      {
+        "atMs": 4029.6,
+        "usedJSHeapSizeBytes": 50195246,
+        "speed": "20"
+      },
+      {
+        "atMs": 4046.2,
+        "usedJSHeapSizeBytes": 50883290,
+        "speed": "20"
+      },
+      {
+        "atMs": 4062.9,
+        "usedJSHeapSizeBytes": 50883290,
+        "speed": "20"
+      },
+      {
+        "atMs": 4079.6,
+        "usedJSHeapSizeBytes": 50883290,
+        "speed": "20"
+      },
+      {
+        "atMs": 4096.3,
+        "usedJSHeapSizeBytes": 50883290,
+        "speed": "20"
+      },
+      {
+        "atMs": 4112.9,
+        "usedJSHeapSizeBytes": 52715218,
+        "speed": "20"
+      },
+      {
+        "atMs": 4129.6,
+        "usedJSHeapSizeBytes": 52715218,
+        "speed": "20"
+      },
+      {
+        "atMs": 4146.3,
+        "usedJSHeapSizeBytes": 52715218,
+        "speed": "20"
+      },
+      {
+        "atMs": 4162.9,
+        "usedJSHeapSizeBytes": 53732054,
+        "speed": "20"
+      },
+      {
+        "atMs": 4179.6,
+        "usedJSHeapSizeBytes": 53732054,
+        "speed": "20"
+      },
+      {
+        "atMs": 4196.2,
+        "usedJSHeapSizeBytes": 53732054,
+        "speed": "20"
+      },
+      {
+        "atMs": 4212.9,
+        "usedJSHeapSizeBytes": 53732054,
+        "speed": "20"
+      },
+      {
+        "atMs": 4229.5,
+        "usedJSHeapSizeBytes": 55680282,
+        "speed": "20"
+      },
+      {
+        "atMs": 4246.3,
+        "usedJSHeapSizeBytes": 55680282,
+        "speed": "20"
+      },
+      {
+        "atMs": 4262.8,
+        "usedJSHeapSizeBytes": 55680282,
+        "speed": "20"
+      },
+      {
+        "atMs": 4279.6,
+        "usedJSHeapSizeBytes": 55680282,
+        "speed": "20"
+      },
+      {
+        "atMs": 4296.3,
+        "usedJSHeapSizeBytes": 57529538,
+        "speed": "20"
+      },
+      {
+        "atMs": 4312.8,
+        "usedJSHeapSizeBytes": 57529538,
+        "speed": "20"
+      },
+      {
+        "atMs": 4329.6,
+        "usedJSHeapSizeBytes": 57529538,
+        "speed": "20"
+      },
+      {
+        "atMs": 4346.2,
+        "usedJSHeapSizeBytes": 58582358,
+        "speed": "20"
+      },
+      {
+        "atMs": 4362.9,
+        "usedJSHeapSizeBytes": 58582358,
+        "speed": "20"
+      },
+      {
+        "atMs": 4379.5,
+        "usedJSHeapSizeBytes": 58582358,
+        "speed": "20"
+      },
+      {
+        "atMs": 4396.2,
+        "usedJSHeapSizeBytes": 55878916,
+        "speed": "20"
+      },
+      {
+        "atMs": 4412.9,
+        "usedJSHeapSizeBytes": 55878916,
+        "speed": "20"
+      },
+      {
+        "atMs": 4429.5,
+        "usedJSHeapSizeBytes": 55878916,
+        "speed": "20"
+      },
+      {
+        "atMs": 4446.2,
+        "usedJSHeapSizeBytes": 44487830,
+        "speed": "20"
+      },
+      {
+        "atMs": 4462.8,
+        "usedJSHeapSizeBytes": 44487830,
+        "speed": "20"
+      },
+      {
+        "atMs": 4479.5,
+        "usedJSHeapSizeBytes": 44487830,
+        "speed": "20"
+      },
+      {
+        "atMs": 4496.2,
+        "usedJSHeapSizeBytes": 44487830,
+        "speed": "20"
+      },
+      {
+        "atMs": 4512.9,
+        "usedJSHeapSizeBytes": 45515510,
+        "speed": "20"
+      },
+      {
+        "atMs": 4529.6,
+        "usedJSHeapSizeBytes": 45515510,
+        "speed": "20"
+      },
+      {
+        "atMs": 4546.2,
+        "usedJSHeapSizeBytes": 45515510,
+        "speed": "20"
+      },
+      {
+        "atMs": 4562.8,
+        "usedJSHeapSizeBytes": 45944678,
+        "speed": "20"
+      },
+      {
+        "atMs": 4579.5,
+        "usedJSHeapSizeBytes": 45944678,
+        "speed": "20"
+      },
+      {
+        "atMs": 4596.2,
+        "usedJSHeapSizeBytes": 45944678,
+        "speed": "20"
+      },
+      {
+        "atMs": 4612.9,
+        "usedJSHeapSizeBytes": 45944678,
+        "speed": "20"
+      },
+      {
+        "atMs": 4629.5,
+        "usedJSHeapSizeBytes": 47601974,
+        "speed": "20"
+      },
+      {
+        "atMs": 4646.2,
+        "usedJSHeapSizeBytes": 47601974,
+        "speed": "20"
+      },
+      {
+        "atMs": 4662.8,
+        "usedJSHeapSizeBytes": 47601974,
+        "speed": "20"
+      },
+      {
+        "atMs": 4679.6,
+        "usedJSHeapSizeBytes": 48537962,
+        "speed": "20"
+      },
+      {
+        "atMs": 4696.2,
+        "usedJSHeapSizeBytes": 48537962,
+        "speed": "20"
+      },
+      {
+        "atMs": 4712.9,
+        "usedJSHeapSizeBytes": 48537962,
+        "speed": "20"
+      },
+      {
+        "atMs": 4729.6,
+        "usedJSHeapSizeBytes": 48537962,
+        "speed": "20"
+      },
+      {
+        "atMs": 4746.3,
+        "usedJSHeapSizeBytes": 49985715,
+        "speed": "20"
+      },
+      {
+        "atMs": 4762.9,
+        "usedJSHeapSizeBytes": 49985715,
+        "speed": "20"
+      },
+      {
+        "atMs": 4779.6,
+        "usedJSHeapSizeBytes": 49985715,
+        "speed": "20"
+      },
+      {
+        "atMs": 4796.2,
+        "usedJSHeapSizeBytes": 49985715,
+        "speed": "20"
+      },
+      {
+        "atMs": 4812.9,
+        "usedJSHeapSizeBytes": 50269171,
+        "speed": "20"
+      },
+      {
+        "atMs": 4829.6,
+        "usedJSHeapSizeBytes": 50269171,
+        "speed": "20"
+      },
+      {
+        "atMs": 4846.2,
+        "usedJSHeapSizeBytes": 50269171,
+        "speed": "20"
+      },
+      {
+        "atMs": 4862.9,
+        "usedJSHeapSizeBytes": 50716315,
+        "speed": "20"
+      },
+      {
+        "atMs": 4879.8,
+        "usedJSHeapSizeBytes": 50716315,
+        "speed": "20"
+      },
+      {
+        "atMs": 4896.2,
+        "usedJSHeapSizeBytes": 50716315,
+        "speed": "20"
+      },
+      {
+        "atMs": 4912.9,
+        "usedJSHeapSizeBytes": 50716315,
+        "speed": "20"
+      },
+      {
+        "atMs": 4929.5,
+        "usedJSHeapSizeBytes": 51204371,
+        "speed": "20"
+      },
+      {
+        "atMs": 4946.2,
+        "usedJSHeapSizeBytes": 51204371,
+        "speed": "20"
+      },
+      {
+        "atMs": 4962.8,
+        "usedJSHeapSizeBytes": 51204371,
+        "speed": "20"
+      },
+      {
+        "atMs": 4979.5,
+        "usedJSHeapSizeBytes": 51204371,
+        "speed": "20"
+      },
+      {
+        "atMs": 4996.2,
+        "usedJSHeapSizeBytes": 52357435,
+        "speed": "20"
+      },
+      {
+        "atMs": 5012.9,
+        "usedJSHeapSizeBytes": 52357435,
+        "speed": "20"
+      },
+      {
+        "atMs": 5029.5,
+        "usedJSHeapSizeBytes": 52357435,
+        "speed": "20"
+      },
+      {
+        "atMs": 5046.2,
+        "usedJSHeapSizeBytes": 52357435,
+        "speed": "20"
+      },
+      {
+        "atMs": 5062.8,
+        "usedJSHeapSizeBytes": 53844379,
+        "speed": "20"
+      },
+      {
+        "atMs": 5079.5,
+        "usedJSHeapSizeBytes": 53844379,
+        "speed": "20"
+      },
+      {
+        "atMs": 5096.2,
+        "usedJSHeapSizeBytes": 53844379,
+        "speed": "20"
+      },
+      {
+        "atMs": 5112.9,
+        "usedJSHeapSizeBytes": 53844379,
+        "speed": "20"
+      },
+      {
+        "atMs": 5129.6,
+        "usedJSHeapSizeBytes": 54625139,
+        "speed": "20"
+      }
+    ]
+  },
+  "coverage": {
+    "verification": "fully_checked",
+    "details": {
+      "method": "conservative_sweep_refinement",
+      "pairs": [
+        "cutter/stock:invalid_cut",
+        "shaft/stock",
+        "holder/stock"
+      ],
+      "machineComponents": [],
+      "stock": "box",
+      "geometryQueries": 2044
+    },
+    "source": "exported final report; null means no exposed field, never assumed fully checked"
+  },
+  "reports": {
+    "initial": {
+      "fileName": "cnc-preview-report.json",
+      "report": {
+        "engineVersion": "0.3.0",
+        "jobId": "local-preview",
+        "revision": 1,
+        "runId": "13e5d1b9-c70b-4fdc-be80-393bbbfb8eaf",
+        "programId": "O1001",
+        "state": {
+          "state": "READY",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 40
+          },
+          "activeTool": 1,
+          "selectedTool": 1,
+          "spindleRpm": 0,
+          "spindleOn": false,
+          "physicalLine": null,
+          "instructionIndex": 0,
+          "progress": 0,
+          "elapsedMs": 0,
+          "totalMs": 38424.03481890141,
+          "speed": 1,
+          "verification": "in_progress",
+          "materialRemoval": true,
+          "stock": {
+            "representation": "z_dexel",
+            "revision": 2,
+            "cellSizeMm": [
+              0.5,
+              0.5
+            ],
+            "grid": [
+              200,
+              160
+            ],
+            "initialVolumeMm3": 160000,
+            "removedVolumeMm3": 0,
+            "remainingVolumeMm3": 160000,
+            "remainingFraction": 1
+          },
+          "cuttingState": "idle",
+          "events": [],
+          "snapshotSeq": 2,
+          "axisPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 90
+          },
+          "coolant": {
+            "mist": false,
+            "flood": false
+          },
+          "instructionCount": 22,
+          "incidents": [],
+          "coverage": {
+            "method": "conservative_sweep_refinement",
+            "pairs": [
+              "cutter/stock:invalid_cut",
+              "shaft/stock",
+              "holder/stock"
+            ],
+            "machineComponents": [],
+            "stock": "box",
+            "geometryQueries": 0
+          }
+        },
+        "capabilities": {
+          "dialectId": "milling-basic-v1",
+          "toolChange": "configured_xyz_or_logical",
+          "materialRemoval": true,
+          "stockRepresentation": "z_dexel",
+          "collisionDetection": "conservative_sweep_refinement",
+          "machineKinematics": "configured_xyz",
+          "modelFormats": [
+            "glb",
+            "stl"
+          ],
+          "modelRoles": [
+            "stock",
+            "fixture",
+            "machine",
+            "target"
+          ],
+          "maxAssetBytes": 33554432,
+          "maxProgramCharacters": 512000
+        },
+        "verification": "in_progress",
+        "collisions": [],
+        "events": [
+          {
+            "title": "任务就绪",
+            "detail": "O1001 · 11 段刀路",
+            "time": "20:10:19"
+          }
+        ],
+        "inputManifest": {
+          "program": {
+            "programId": "O1001",
+            "sha256": "e7befad83d24a88e937bb455bbd2c8b7f4bae673eeb403bfb01dabc2014b4559",
+            "lineEnding": "LF",
+            "physicalLines": 20
+          },
+          "toolTableSha256": "8074691a7bd5fd9d9e0fd4f68f30677159c12efa1a1b0b29f552e5ca97312dcb",
+          "machineProfileSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "workOffsetsMm": {
+            "G54": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          "simulation": {
+            "stockCellMm": 0.5,
+            "arcChordToleranceMm": 0.02,
+            "mode": "cut",
+            "checkCollisions": true,
+            "contactLocalizationMm": 0.05,
+            "maxCollisionQueries": 200000,
+            "maxMemoryMb": 512
+          },
+          "assets": [],
+          "coverage": {
+            "method": "conservative_sweep_refinement",
+            "pairs": [
+              "cutter/stock:invalid_cut",
+              "shaft/stock",
+              "holder/stock"
+            ],
+            "machineComponents": [],
+            "stock": "box",
+            "geometryQueries": 0
+          }
+        },
+        "reliableRun": {
+          "identity": {
+            "jobId": "local-preview",
+            "revision": 1,
+            "runId": "13e5d1b9-c70b-4fdc-be80-393bbbfb8eaf"
+          },
+          "state": "READY",
+          "interrupted": false,
+          "updatedAt": 1792325419404,
+          "nextEventSeq": 1,
+          "events": []
+        },
+        "history": [
+          {
+            "identity": {
+              "jobId": "local-preview",
+              "revision": 1,
+              "runId": "13e5d1b9-c70b-4fdc-be80-393bbbfb8eaf"
+            },
+            "state": "READY",
+            "interrupted": false,
+            "updatedAt": 1792325419404,
+            "nextEventSeq": 1,
+            "events": []
+          }
+        ],
+        "persistenceError": null
+      }
+    },
+    "final": {
+      "fileName": "cnc-preview-report.json",
+      "report": {
+        "engineVersion": "0.3.0",
+        "jobId": "local-preview",
+        "revision": 1,
+        "runId": "13e5d1b9-c70b-4fdc-be80-393bbbfb8eaf",
+        "programId": "O1001",
+        "state": {
+          "state": "COMPLETED",
+          "position": {
+            "x": 0,
+            "y": 12,
+            "z": 30
+          },
+          "activeTool": 2,
+          "selectedTool": 2,
+          "spindleRpm": 4500,
+          "spindleOn": false,
+          "physicalLine": 20,
+          "instructionIndex": 22,
+          "progress": 1,
+          "elapsedMs": 38424.03481890141,
+          "totalMs": 38424.03481890141,
+          "speed": 20,
+          "verification": "fully_checked",
+          "materialRemoval": true,
+          "stock": {
+            "representation": "z_dexel",
+            "revision": 621,
+            "cellSizeMm": [
+              0.5,
+              0.5
+            ],
+            "grid": [
+              200,
+              160
+            ],
+            "initialVolumeMm3": 160000,
+            "removedVolumeMm3": 7670.61102846761,
+            "remainingVolumeMm3": 152329.3889715324,
+            "remainingFraction": 0.9520586810720775
+          },
+          "cuttingState": "idle",
+          "events": [],
+          "snapshotSeq": 344,
+          "axisPosition": {
+            "x": 0,
+            "y": 12,
+            "z": 75
+          },
+          "coolant": {
+            "mist": false,
+            "flood": false
+          },
+          "instructionCount": 22,
+          "incidents": [],
+          "coverage": {
+            "method": "conservative_sweep_refinement",
+            "pairs": [
+              "cutter/stock:invalid_cut",
+              "shaft/stock",
+              "holder/stock"
+            ],
+            "machineComponents": [],
+            "stock": "box",
+            "geometryQueries": 2044
+          }
+        },
+        "capabilities": {
+          "dialectId": "milling-basic-v1",
+          "toolChange": "configured_xyz_or_logical",
+          "materialRemoval": true,
+          "stockRepresentation": "z_dexel",
+          "collisionDetection": "conservative_sweep_refinement",
+          "machineKinematics": "configured_xyz",
+          "modelFormats": [
+            "glb",
+            "stl"
+          ],
+          "modelRoles": [
+            "stock",
+            "fixture",
+            "machine",
+            "target"
+          ],
+          "maxAssetBytes": 33554432,
+          "maxProgramCharacters": 512000
+        },
+        "verification": "fully_checked",
+        "collisions": [],
+        "events": [
+          {
+            "title": "加工仿真完成",
+            "detail": "切除 7670.6 mm³ · 已完成配置范围检查",
+            "time": "20:10:24"
+          },
+          {
+            "title": "逻辑换刀",
+            "detail": "第13行 · T2 已装入主轴",
+            "time": "20:10:23"
+          },
+          {
+            "title": "逻辑换刀",
+            "detail": "第3行 · T1 已装入主轴",
+            "time": "20:10:19"
+          },
+          {
+            "title": "任务就绪",
+            "detail": "O1001 · 11 段刀路",
+            "time": "20:10:19"
+          }
+        ],
+        "inputManifest": {
+          "program": {
+            "programId": "O1001",
+            "sha256": "e7befad83d24a88e937bb455bbd2c8b7f4bae673eeb403bfb01dabc2014b4559",
+            "lineEnding": "LF",
+            "physicalLines": 20
+          },
+          "toolTableSha256": "8074691a7bd5fd9d9e0fd4f68f30677159c12efa1a1b0b29f552e5ca97312dcb",
+          "machineProfileSha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "workOffsetsMm": {
+            "G54": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            }
+          },
+          "simulation": {
+            "stockCellMm": 0.5,
+            "arcChordToleranceMm": 0.02,
+            "mode": "cut",
+            "checkCollisions": true,
+            "contactLocalizationMm": 0.05,
+            "maxCollisionQueries": 200000,
+            "maxMemoryMb": 512
+          },
+          "assets": [],
+          "coverage": {
+            "method": "conservative_sweep_refinement",
+            "pairs": [
+              "cutter/stock:invalid_cut",
+              "shaft/stock",
+              "holder/stock"
+            ],
+            "machineComponents": [],
+            "stock": "box",
+            "geometryQueries": 2044
+          }
+        },
+        "reliableRun": {
+          "identity": {
+            "jobId": "local-preview",
+            "revision": 1,
+            "runId": "13e5d1b9-c70b-4fdc-be80-393bbbfb8eaf"
+          },
+          "state": "COMPLETED",
+          "interrupted": false,
+          "updatedAt": 1792325424121,
+          "nextEventSeq": 4,
+          "events": [
+            {
+              "envelope": {
+                "protocol": "cnc-sim",
+                "version": "1.0",
+                "type": "TOOL_CHANGE",
+                "messageId": "506af654-f7b8-41d6-b9ee-ea332355b69e",
+                "channelId": "",
+                "jobId": "local-preview",
+                "revision": 1,
+                "runId": "13e5d1b9-c70b-4fdc-be80-393bbbfb8eaf",
+                "payload": {
+                  "type": "TOOL_CHANGE",
+                  "toolNumber": 1,
+                  "physicalLine": 3,
+                  "instructionId": 2,
+                  "capability": "logical_tool_change",
+                  "contactStage": "clamp_new",
+                  "eventId": "05a26795-7d8b-418f-a2ce-950378e5234d",
+                  "eventSeq": 1,
+                  "delivery": {
+                    "durable": true
+                  }
+                }
+              },
+              "origin": null,
+              "createdAt": 1792325419769
+            },
+            {
+              "envelope": {
+                "protocol": "cnc-sim",
+                "version": "1.0",
+                "type": "TOOL_CHANGE",
+                "messageId": "56d5f27b-41a7-4e9f-93b5-a1cecbd4f2e9",
+                "channelId": "",
+                "jobId": "local-preview",
+                "revision": 1,
+                "runId": "13e5d1b9-c70b-4fdc-be80-393bbbfb8eaf",
+                "payload": {
+                  "type": "TOOL_CHANGE",
+                  "toolNumber": 2,
+                  "physicalLine": 13,
+                  "instructionId": 14,
+                  "capability": "logical_tool_change",
+                  "contactStage": "clamp_new",
+                  "eventId": "f513f315-15f6-45dc-b3cf-5a31708ba3f0",
+                  "eventSeq": 2,
+                  "delivery": {
+                    "durable": true
+                  }
+                }
+              },
+              "origin": null,
+              "createdAt": 1792325423682
+            },
+            {
+              "envelope": {
+                "protocol": "cnc-sim",
+                "version": "1.0",
+                "type": "COMPLETED",
+                "messageId": "cd83cf78-5194-4293-9acc-00e66d9959b9",
+                "channelId": "",
+                "jobId": "local-preview",
+                "revision": 1,
+                "runId": "13e5d1b9-c70b-4fdc-be80-393bbbfb8eaf",
+                "payload": {
+                  "state": "COMPLETED",
+                  "position": {
+                    "x": 0,
+                    "y": 12,
+                    "z": 30
+                  },
+                  "activeTool": 2,
+                  "selectedTool": 2,
+                  "spindleRpm": 4500,
+                  "spindleOn": false,
+                  "physicalLine": 20,
+                  "instructionIndex": 22,
+                  "progress": 1,
+                  "elapsedMs": 38424.03481890141,
+                  "totalMs": 38424.03481890141,
+                  "speed": 20,
+                  "verification": "fully_checked",
+                  "materialRemoval": true,
+                  "stock": {
+                    "representation": "z_dexel",
+                    "revision": 621,
+                    "cellSizeMm": [
+                      0.5,
+                      0.5
+                    ],
+                    "grid": [
+                      200,
+                      160
+                    ],
+                    "initialVolumeMm3": 160000,
+                    "removedVolumeMm3": 7670.61102846761,
+                    "remainingVolumeMm3": 152329.3889715324,
+                    "remainingFraction": 0.9520586810720775
+                  },
+                  "cuttingState": "idle",
+                  "events": [],
+                  "snapshotSeq": 344,
+                  "axisPosition": {
+                    "x": 0,
+                    "y": 12,
+                    "z": 75
+                  },
+                  "coolant": {
+                    "mist": false,
+                    "flood": false
+                  },
+                  "instructionCount": 22,
+                  "incidents": [],
+                  "coverage": {
+                    "method": "conservative_sweep_refinement",
+                    "pairs": [
+                      "cutter/stock:invalid_cut",
+                      "shaft/stock",
+                      "holder/stock"
+                    ],
+                    "machineComponents": [],
+                    "stock": "box",
+                    "geometryQueries": 2044
+                  },
+                  "delivery": {
+                    "durable": true
+                  },
+                  "eventId": "3907bd45-eb14-4726-8fa7-99dee6240d79",
+                  "eventSeq": 3
+                }
+              },
+              "origin": null,
+              "createdAt": 1792325424121
+            }
+          ]
+        },
+        "history": [
+          {
+            "identity": {
+              "jobId": "local-preview",
+              "revision": 1,
+              "runId": "13e5d1b9-c70b-4fdc-be80-393bbbfb8eaf"
+            },
+            "state": "COMPLETED",
+            "interrupted": false,
+            "updatedAt": 1792325424121,
+            "nextEventSeq": 4,
+            "events": [
+              {
+                "envelope": {
+                  "protocol": "cnc-sim",
+                  "version": "1.0",
+                  "type": "TOOL_CHANGE",
+                  "messageId": "506af654-f7b8-41d6-b9ee-ea332355b69e",
+                  "channelId": "",
+                  "jobId": "local-preview",
+                  "revision": 1,
+                  "runId": "13e5d1b9-c70b-4fdc-be80-393bbbfb8eaf",
+                  "payload": {
+                    "type": "TOOL_CHANGE",
+                    "toolNumber": 1,
+                    "physicalLine": 3,
+                    "instructionId": 2,
+                    "capability": "logical_tool_change",
+                    "contactStage": "clamp_new",
+                    "eventId": "05a26795-7d8b-418f-a2ce-950378e5234d",
+                    "eventSeq": 1,
+                    "delivery": {
+                      "durable": true
+                    }
+                  }
+                },
+                "origin": null,
+                "createdAt": 1792325419769
+              },
+              {
+                "envelope": {
+                  "protocol": "cnc-sim",
+                  "version": "1.0",
+                  "type": "TOOL_CHANGE",
+                  "messageId": "56d5f27b-41a7-4e9f-93b5-a1cecbd4f2e9",
+                  "channelId": "",
+                  "jobId": "local-preview",
+                  "revision": 1,
+                  "runId": "13e5d1b9-c70b-4fdc-be80-393bbbfb8eaf",
+                  "payload": {
+                    "type": "TOOL_CHANGE",
+                    "toolNumber": 2,
+                    "physicalLine": 13,
+                    "instructionId": 14,
+                    "capability": "logical_tool_change",
+                    "contactStage": "clamp_new",
+                    "eventId": "f513f315-15f6-45dc-b3cf-5a31708ba3f0",
+                    "eventSeq": 2,
+                    "delivery": {
+                      "durable": true
+                    }
+                  }
+                },
+                "origin": null,
+                "createdAt": 1792325423682
+              },
+              {
+                "envelope": {
+                  "protocol": "cnc-sim",
+                  "version": "1.0",
+                  "type": "COMPLETED",
+                  "messageId": "cd83cf78-5194-4293-9acc-00e66d9959b9",
+                  "channelId": "",
+                  "jobId": "local-preview",
+                  "revision": 1,
+                  "runId": "13e5d1b9-c70b-4fdc-be80-393bbbfb8eaf",
+                  "payload": {
+                    "state": "COMPLETED",
+                    "position": {
+                      "x": 0,
+                      "y": 12,
+                      "z": 30
+                    },
+                    "activeTool": 2,
+                    "selectedTool": 2,
+                    "spindleRpm": 4500,
+                    "spindleOn": false,
+                    "physicalLine": 20,
+                    "instructionIndex": 22,
+                    "progress": 1,
+                    "elapsedMs": 38424.03481890141,
+                    "totalMs": 38424.03481890141,
+                    "speed": 20,
+                    "verification": "fully_checked",
+                    "materialRemoval": true,
+                    "stock": {
+                      "representation": "z_dexel",
+                      "revision": 621,
+                      "cellSizeMm": [
+                        0.5,
+                        0.5
+                      ],
+                      "grid": [
+                        200,
+                        160
+                      ],
+                      "initialVolumeMm3": 160000,
+                      "removedVolumeMm3": 7670.61102846761,
+                      "remainingVolumeMm3": 152329.3889715324,
+                      "remainingFraction": 0.9520586810720775
+                    },
+                    "cuttingState": "idle",
+                    "events": [],
+                    "snapshotSeq": 344,
+                    "axisPosition": {
+                      "x": 0,
+                      "y": 12,
+                      "z": 75
+                    },
+                    "coolant": {
+                      "mist": false,
+                      "flood": false
+                    },
+                    "instructionCount": 22,
+                    "incidents": [],
+                    "coverage": {
+                      "method": "conservative_sweep_refinement",
+                      "pairs": [
+                        "cutter/stock:invalid_cut",
+                        "shaft/stock",
+                        "holder/stock"
+                      ],
+                      "machineComponents": [],
+                      "stock": "box",
+                      "geometryQueries": 2044
+                    },
+                    "delivery": {
+                      "durable": true
+                    },
+                    "eventId": "3907bd45-eb14-4726-8fa7-99dee6240d79",
+                    "eventSeq": 3
+                  }
+                },
+                "origin": null,
+                "createdAt": 1792325424121
+              }
+            ]
+          }
+        ],
+        "persistenceError": null
+      }
+    }
+  },
+  "diagnostics": {
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedResources": []
+  },
+  "screenshots": {
+    "desktop": "docs/screenshots/full-desktop.png",
+    "desktopViewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "narrow": "docs/screenshots/full-narrow.png",
+    "narrowViewport": {
+      "width": 860,
+      "height": 1000
+    },
+    "narrowHorizontalOverflow": false
+  }
+}

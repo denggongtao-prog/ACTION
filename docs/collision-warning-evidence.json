@@ -1,0 +1,80 @@
+{
+  "measuredAt": "2026-10-18T13:56:39.543Z",
+  "browser": "155.0.4283.60",
+  "programId": "O0008",
+  "programSha256": "1b288d609ccdbf8b58df6d56c977c95a111066ae2b801d908bdfeefe7a52bca2",
+  "collisionResponse": "warn_continue",
+  "state": "COMPLETED",
+  "progress": 1,
+  "finalPhysicalLine": 134,
+  "verification": "collision_detected",
+  "warningCount": 4,
+  "warnings": [
+    {
+      "eventId": "68f47fd8-dd22-476f-948c-071f9c8fd2ce",
+      "line": 95,
+      "block": 910,
+      "type": "RAPID_STOCK",
+      "response": "warn_continue",
+      "contact": [
+        8,
+        1.1359416258568817,
+        22
+      ]
+    },
+    {
+      "eventId": "bd84f0c5-f5e9-4d2d-b535-9b8334aa1456",
+      "line": 119,
+      "block": 1150,
+      "type": "SHAFT_STOCK",
+      "response": "warn_continue",
+      "contact": [
+        0,
+        0,
+        12.5
+      ]
+    },
+    {
+      "eventId": "0d672968-0052-41f6-b1b7-a1e521c2c136",
+      "line": 122,
+      "block": 1170,
+      "type": "SHAFT_STOCK",
+      "response": "warn_continue",
+      "contact": [
+        0,
+        0,
+        12.5
+      ]
+    },
+    {
+      "eventId": "a07a5a29-e8b4-431d-97c5-266b314d5a2a",
+      "line": 123,
+      "block": 1180,
+      "type": "SHAFT_STOCK",
+      "response": "warn_continue",
+      "contact": [
+        242,
+        229,
+        22
+      ]
+    }
+  ],
+  "stock": {
+    "representation": "z_dexel",
+    "revision": 6425,
+    "cellSizeMm": [
+      1,
+      1
+    ],
+    "grid": [
+      320,
+      350
+    ],
+    "initialVolumeMm3": 2464000,
+    "removedVolumeMm3": 330628.7603276217,
+    "remainingVolumeMm3": 2133371.239672378,
+    "remainingFraction": 0.8658162498670366
+  },
+  "narrowHorizontalOverflow": false,
+  "errors": []
+}
