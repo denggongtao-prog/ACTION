@@ -165,8 +165,8 @@ async function importModel(event:Event){
     if(file.size>32*1024*1024)throw new Error('模型超过32MB');
     const format=file.name.split('.').pop()?.toLowerCase();
     if(format!=='glb'&&format!=='stl')throw new Error('请选择GLB或STL文件');
-    const asset={objectId:'imported-model',role:modelRole.value,format:format as 'glb'|'stl',unit:'mm' as const,buffer:await file.arrayBuffer(),poseInM:{translationMm:[0,0,0],quaternionXYZW:[0,0,0,1]}};
-    await loadTask({...currentJob.value,program:programDraft(),stock:modelRole.value==='stock'?{...currentJob.value.stock,kind:'mesh',assetId:asset.objectId}:currentJob.value.stock,assets:[asset]});
+    const asset={objectId:'imported-'+modelRole.value,role:modelRole.value,format:format as 'glb'|'stl',unit:'mm' as const,buffer:await file.arrayBuffer(),poseInM:{translationMm:[0,0,0],quaternionXYZW:[0,0,0,1]}};
+    await loadTask({...currentJob.value,program:programDraft(),stock:modelRole.value==='stock'?{...currentJob.value.stock,kind:'mesh',assetId:asset.objectId}:currentJob.value.stock,assets:[...currentJob.value.assets.filter(a=>a.objectId!==asset.objectId),asset]});
     importedName.value=file.name;
   }catch(e){error.value=(e as Error).message;}
   (event.target as HTMLInputElement).value='';
