@@ -1,4 +1,11 @@
 import {test,expect} from '@playwright/test';
+test('第08轮：O0008完整动画后导出全部4条碰撞CSV',async({page})=>{
+  await page.goto('/');await expect(page.getByTestId('state')).toHaveText('就绪');await page.getByLabel('原始案例').selectOption('O0008');await page.getByRole('button',{name:'载入案例',exact:true}).click();
+  await expect(page.getByTestId('state')).toHaveText('就绪');await page.getByLabel('回放倍率').selectOption('20');await page.getByRole('button',{name:'开始',exact:true}).click();await expect(page.getByTestId('state')).toHaveText('已完成',{timeout:20000});
+  const download=page.waitForEvent('download');await page.getByRole('button',{name:'导出碰撞CSV',exact:true}).click();const file=await download;expect(file.suggestedFilename()).toBe('cnc-collision-records.csv');
+  let csv='';for await(const chunk of (await file.createReadStream())!)csv+=chunk;
+  expect(csv).toContain(',95,910,');expect(csv.split('\r\n')).toHaveLength(6);expect(csv).toContain('warn_continue');expect(csv).toContain('positionErrorBoundMm');
+});
 test('第07轮：上位网页完成单步、继续、暂停、调速及回看身份切换',async({page})=>{
   await page.goto('/host.html');await expect(page.getByTestId('host-status')).toHaveText('已连接');
   const input=page.getByLabel('上位网页任务JSON'),job=JSON.parse(await input.inputValue());job.program={programId:'host-controls',text:'M3 S1000\nG4 P3\nG0 X10\nM30'};
