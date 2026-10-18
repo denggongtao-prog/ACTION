@@ -7,7 +7,7 @@ export class CncSimClient {
   constructor(frame,url,{onMessage=()=>{},onEvent=()=>{},onError=console.error,onConnectionChange=()=>{},persistEvent}={}){
     this.frame=frame;this.url=new URL(url,location.href);this.origin=this.url.origin;
     this.channelId=crypto.randomUUID();this.context=null;this.connected=false;this.loaded=false;this.disposed=false;this.epoch=0;
-    this.pending=new Map();this.revisions=new Map();this.eventQueue=Promise.resolve();
+    this.pending=new Map();this.revisions=new Map();this.eventQueue=Promise.resolve();this.commandQueue=Promise.resolve();
     this.onMessage=onMessage;this.onEvent=onEvent;this.onError=onError;
     this.onConnectionChange=onConnectionChange;this.connectionState='disconnected';
     this.persistEvent=persistEvent??(message=>{
@@ -19,6 +19,7 @@ export class CncSimClient {
     this.receive=event=>this._receive(event);
     this.frameLoaded=()=>{
       if(this.disposed)return;this.epoch++;
+      this.commandQueue=Promise.resolve();
       this.loaded=false;this._rejectPending(new Error('IFRAME_RELOADED：请重新查询历史或载入任务'));this._beginHandshake();
       clearInterval(this.helloTimer);this._hello();this.helloTimer=setInterval(()=>this._hello(),400);
     };
@@ -114,20 +115,33 @@ export class CncSimClient {
       this.pending.set(message.messageId,record);send();
     });
   }
-  async loadJob(job,{jobId='manual-example',revision,runId=crypto.randomUUID()}={}){
+  _enqueue(work){
+    const epoch=this.epoch;
+    const task=this.commandQueue.then(()=>{
+      if(this.disposed)throw new Error('连接已释放');
+      if(epoch!==this.epoch)throw new Error('IFRAME_RELOADED：已取消旧页面排队操作');
+      return work();
+    });
+    this.commandQueue=task.catch(()=>{});return task;
+  }
+  async loadJob(job,options={}){
+    const input=structuredClone(job),config=structuredClone(options);
+    return this._enqueue(()=>this._loadJob(input,config));
+  }
+  async _loadJob(job,{jobId='manual-example',revision,runId=crypto.randomUUID()}={}){
     if(!this.connected)throw new Error('请先完成HELLO握手');
     const nextRevision=revision??Math.max(this.revisions.get(jobId)??0,this.context?.jobId===jobId?this.context.revision:0)+1;
     this._validateRequest('LOAD_JOB',job,{jobId,revision:nextRevision,runId},60000,1);structuredClone(job);
     this.context={jobId,revision:nextRevision,runId};this.revisions.set(jobId,nextRevision);this.loaded=false;
     return this.request('LOAD_JOB',job,{timeoutMs:60000});
   }
-  start(){return this.request('START');}
-  pause(){return this.request('PAUSE');}
-  resume(){return this.request('RESUME');}
-  step(){return this.request('STEP');}
-  reset(){return this.request('RESET');} // Adopt returned STATE identity; do not invent the new runId.
-  seekLine(physicalLine){return this.request('SEEK_LINE',{physicalLine});}
-  setSpeed(speed){return this.request('SET_SPEED',{speed});}
+  start(){return this._enqueue(()=>this.request('START'));}
+  pause(){return this._enqueue(()=>this.request('PAUSE'));}
+  resume(){return this._enqueue(()=>this.request('RESUME'));}
+  step(){return this._enqueue(()=>this.request('STEP'));}
+  reset(){return this._enqueue(()=>this.request('RESET'));}
+  seekLine(physicalLine){return this._enqueue(()=>this.request('SEEK_LINE',{physicalLine}));}
+  setSpeed(speed){return this._enqueue(()=>this.request('SET_SPEED',{speed}));}
   _read(type,identity,followCurrent){
     return this.request(type,{}, {identity}).catch(error=>{
       // A lost RESET/SEEK reply can leave local identity stale. Only retry reads, once.
@@ -136,8 +150,8 @@ export class CncSimClient {
       throw error;
     });
   }
-  getState(identity){return this._read('GET_STATE',identity??this.context,identity===undefined);}
-  getReport(identity){return this._read('GET_REPORT',identity??this.context,identity===undefined);}
+  getState(identity){return this._enqueue(()=>this._read('GET_STATE',identity??this.context,identity===undefined));}
+  getReport(identity){return this._enqueue(()=>this._read('GET_REPORT',identity??this.context,identity===undefined));}
   _rejectPending(error){for(const p of this.pending.values()){clearTimeout(p.timer);p.reject(error);}this.pending.clear();}
   dispose(){
     if(this.disposed)return;this.disposed=true;this.epoch++;

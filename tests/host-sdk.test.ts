@@ -48,3 +48,20 @@ describe('第03轮：握手与重连',()=>{
     const count=sent.length;await vi.advanceTimersByTimeAsync(2000);expect(sent).toHaveLength(count);
   });
 });
+const flush=async()=>{for(let i=0;i<12;i++)await Promise.resolve();};
+describe('第04轮：顺序控制',()=>{
+  it('连续RESET与调速等待新身份再发送',async()=>{
+    const resetting=client.reset(),speed=client.setSpeed(2);await flush();expect(sent.map(m=>m.type)).toEqual(['RESET']);
+    receive('STATE',{state:{state:'READY'}},{runId:'after-reset',replyTo:sent[0].messageId});await resetting;await flush();
+    expect(sent[1].runId).toBe('after-reset');receive('COMMAND_ACK',{state:{state:'READY'}},{runId:'after-reset',replyTo:sent[1].messageId});await speed;
+  });
+  it('失败命令不会阻断队列中的下一条命令',async()=>{
+    const first=client.reset().catch((e:any)=>e.code),second=client.setSpeed(2);await flush();
+    receive('COMMAND_ERROR',{code:'COMMAND_ERROR',message:'拒绝重置'},{replyTo:sent[0].messageId});expect(await first).toBe('COMMAND_ERROR');await flush();
+    expect(sent.at(-1).type).toBe('SET_SPEED');receive('COMMAND_ACK',{}, {replyTo:sent.at(-1).messageId});await second;
+  });
+  it('重载后丢弃原页面队列，不能重放控制命令',async()=>{
+    const results=Promise.allSettled([client.reset(),client.setSpeed(2)]);await flush();frame.dispatchEvent(new Event('load'));await results;
+    expect(sent.filter(m=>m.type==='SET_SPEED')).toHaveLength(0);
+  });
+});
