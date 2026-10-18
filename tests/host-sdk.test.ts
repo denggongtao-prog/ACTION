@@ -65,3 +65,17 @@ describe('第04轮：顺序控制',()=>{
     expect(sent.filter(m=>m.type==='SET_SPEED')).toHaveLength(0);
   });
 });
+describe('第05轮：事件降级和回调隔离',()=>{
+  it('无eventId的持久化故障交给业务并报告降级，不确认',()=>{
+    client.onEvent=vi.fn();client.onError=vi.fn();receive('ERROR',{code:'EVENT_PERSISTENCE_FAILED',message:'存储不可用',delivery:{durable:false}});
+    expect(client.onEvent).toHaveBeenCalledOnce();expect(client.onError).toHaveBeenCalledWith(expect.objectContaining({code:'EVENT_PERSISTENCE_FAILED'}));expect(sent).toHaveLength(0);
+  });
+  it('业务回调抛异常不能破坏消息处理，错误回调自身异常也隔离',async()=>{
+    client.onMessage=()=>{throw new Error('业务显示失败');};client.onError=vi.fn();
+    const pending=client.request('GET_STATE');expect(()=>receive('STATE',{state:{}},{replyTo:sent[0].messageId})).not.toThrow();await pending;
+    expect(client.onError).toHaveBeenCalledOnce();client.onError=()=>{throw new Error('日志失败');};expect(()=>receive('PROGRESS',{})).not.toThrow();
+  });
+  it('畸形信封和数组payload不交给业务',()=>{
+    client.onMessage=vi.fn();receive('PROGRESS',[]);receive('PROGRESS',{}, {messageId:''});receive('PROGRESS',{}, {version:'2.0'});expect(client.onMessage).not.toHaveBeenCalled();
+  });
+});

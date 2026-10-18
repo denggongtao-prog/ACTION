@@ -34,13 +34,15 @@ export class CncSimClient {
     this.handshake={promise,resolve,reject};this._beginHandshake();
     this.frame.src=this.url.href;return promise;
   }
-  _connection(state){this.connectionState=state;this.connected=state==='connected';this.onConnectionChange(state);}
+  _error(error){try{Promise.resolve(this.onError(error)).catch(()=>{});}catch{/* A failing logger must not break transport. */}}
+  _notify(name,value){try{Promise.resolve(this[name](value)).catch(error=>this._error(error));}catch(error){this._error(error);}}
+  _connection(state){this.connectionState=state;this.connected=state==='connected';this._notify('onConnectionChange',state);}
   _beginHandshake(){
     this._connection('connecting');clearTimeout(this.handshakeTimer);
     this.handshakeTimer=setTimeout(()=>{
       clearInterval(this.helloTimer);this._connection('disconnected');
       const error=new Error('HELLO超时：检查来源白名单、iframe地址和CSP');
-      if(this.handshake){this.handshake.reject(error);this.handshake=null;}else this.onError(error);
+      if(this.handshake){this.handshake.reject(error);this.handshake=null;}else this._error(error);
     },15000);
   }
   _envelope(type,payload={},identity=this.context){
@@ -49,7 +51,7 @@ export class CncSimClient {
   _post(message){this.frame.contentWindow.postMessage(message,this.origin);}
   _hello(){this._post(this._envelope('HELLO',{},null));}
   _adopt(message){
-    if(typeof message.jobId==='string'&&Number.isSafeInteger(message.revision)&&typeof message.runId==='string'){
+    if(validIdentity(message)){
       this.context={jobId:message.jobId,revision:message.revision,runId:message.runId};
       this.revisions.set(message.jobId,Math.max(message.revision,this.revisions.get(message.jobId)??0));
     }
@@ -57,21 +59,24 @@ export class CncSimClient {
   _receive(event){
     if(this.disposed)return;
     if(event.origin!==this.origin||event.source!==this.frame.contentWindow)return;
-    const m=event.data;if(!m||m.protocol!=='cnc-sim'||m.version!=='1.0'||m.channelId!==this.channelId||!m.payload)return;
+    const m=event.data;if(!m||m.protocol!=='cnc-sim'||m.version!=='1.0'||m.channelId!==this.channelId||!validId(m.messageId)||!validId(m.type)||!m.payload||typeof m.payload!=='object'||Array.isArray(m.payload))return;
     if(m.type==='SIM_READY'){
       this.ready=m.payload;this.readyMessage=m;this._connection('connected');clearInterval(this.helloTimer);clearTimeout(this.handshakeTimer);
       if(this.handshake){this.handshake.resolve(m);this.handshake=null;}
     }
     // ACK only critical EVENT TYPES. COMMAND_ACK also contains eventId and must never be ACKed again.
-    if(CRITICAL_EVENTS.has(m.type)&&typeof m.payload.eventId==='string'){
+    if(CRITICAL_EVENTS.has(m.type)){
+      if(m.payload.delivery?.durable===false)this._error(Object.assign(new Error(m.payload.delivery.message??m.payload.message??'事件持久化已降级'),{code:'EVENT_PERSISTENCE_FAILED'}));
+      if(m.payload.eventId===undefined){this._notify('onEvent',m);return;}
+      if(!validId(m.payload.eventId)||!validIdentity(m)||!Number.isSafeInteger(m.payload.eventSeq)||m.payload.eventSeq<1)return;
       const epoch=this.epoch;
       this.eventQueue=this.eventQueue.then(async()=>{
         if(this.disposed||epoch!==this.epoch)return;
         const fresh=await this.persistEvent(structuredClone(m)); // Failure => no ACK; server retains/retries.
         if(this.disposed||epoch!==this.epoch)return;
         this._post(this._envelope('EVENT_ACK',{eventId:m.payload.eventId},{jobId:m.jobId,revision:m.revision,runId:m.runId}));
-        if(fresh!==false)this.onEvent(m);
-      }).catch(error=>this.onError(error));return;
+        if(fresh!==false)this._notify('onEvent',m);
+      }).catch(error=>this._error(error));return;
     }
     const pending=this.pending.get(m.replyTo);
     if(pending){
@@ -84,7 +89,7 @@ export class CncSimClient {
         pending.reject(Object.assign(new Error(m.payload.message),m.payload,{identity}));
       }else pending.resolve(m);
     }
-    this.onMessage(m);
+    this._notify('onMessage',m);
   }
   _validateRequest(type,payload,identity,timeoutMs,retries){
     const invalid=message=>{throw Object.assign(new Error(message),{code:'INVALID_INPUT'});};
